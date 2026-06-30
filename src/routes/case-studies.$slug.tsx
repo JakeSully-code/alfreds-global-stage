@@ -106,7 +106,7 @@ export const Route = createFileRoute("/case-studies/$slug")({
 });
 
 function CaseStudy() {
-  const cs = Route.useLoaderData();
+  const cs = Route.useLoaderData() as CaseStudyData;
   return (
     <article>
       <header className="container-x pt-16 pb-12 md:pt-24 md:pb-16">
