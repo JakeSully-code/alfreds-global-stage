@@ -355,20 +355,34 @@ function Home() {
       <Section id="resume" eyebrow="10 — Resume" title="Three lenses on the same operator." surface>
         <div className="grid md:grid-cols-3 gap-4">
           {[
-            "Programs Management Resume",
-            "Community Resume",
-            "Product Strategy Resume",
+            {
+              label: "Programs Management Resume",
+              descriptor: "For roles in program & operations leadership across global teams.",
+            },
+            {
+              label: "Community Resume",
+              descriptor: "For community, developer relations, and ecosystem-building roles.",
+            },
+            {
+              label: "Product Strategy Resume",
+              descriptor: "For product management and product strategy roles.",
+            },
           ].map((r) => (
             <a
-              key={r}
+              key={r.label}
               href="#"
-              className="group rounded-2xl border border-border bg-background p-6 lift flex items-center justify-between"
+              className="group rounded-2xl border border-border bg-background p-6 lift block"
             >
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">PDF</div>
-                <div className="font-serif text-xl mt-1">{r}</div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">PDF</div>
+                  <div className="font-serif text-xl mt-1">{r.label}</div>
+                </div>
+                <span className="text-2xl text-muted-foreground group-hover:text-[var(--emerald)] transition-colors">↓</span>
               </div>
-              <span className="text-2xl text-muted-foreground group-hover:text-[var(--emerald)] transition-colors">↓</span>
+              <p className="mt-3 text-xs text-muted-foreground/80 leading-relaxed">
+                {r.descriptor}
+              </p>
             </a>
           ))}
         </div>
