@@ -10,24 +10,30 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProductThinkingRouteImport } from './routes/product-thinking'
-import { Route as HiringAlfredRouteImport } from './routes/hiring-alfred'
 import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
+import { Route as AuthenticatedHiringAlfredRouteImport } from './routes/_authenticated/hiring-alfred'
 
 const ProductThinkingRoute = ProductThinkingRouteImport.update({
   id: '/product-thinking',
   path: '/product-thinking',
   getParentRoute: () => rootRouteImport,
 } as any)
-const HiringAlfredRoute = HiringAlfredRouteImport.update({
-  id: '/hiring-alfred',
-  path: '/hiring-alfred',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CommunityStrategyRoute = CommunityStrategyRouteImport.update({
   id: '/community-strategy',
   path: '/community-strategy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -40,57 +46,72 @@ const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
   path: '/case-studies/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedHiringAlfredRoute =
+  AuthenticatedHiringAlfredRouteImport.update({
+    id: '/hiring-alfred',
+    path: '/hiring-alfred',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
-  '/hiring-alfred': typeof HiringAlfredRoute
   '/product-thinking': typeof ProductThinkingRoute
+  '/hiring-alfred': typeof AuthenticatedHiringAlfredRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
-  '/hiring-alfred': typeof HiringAlfredRoute
   '/product-thinking': typeof ProductThinkingRoute
+  '/hiring-alfred': typeof AuthenticatedHiringAlfredRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
-  '/hiring-alfred': typeof HiringAlfredRoute
   '/product-thinking': typeof ProductThinkingRoute
+  '/_authenticated/hiring-alfred': typeof AuthenticatedHiringAlfredRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/community-strategy'
-    | '/hiring-alfred'
     | '/product-thinking'
+    | '/hiring-alfred'
     | '/case-studies/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/community-strategy'
-    | '/hiring-alfred'
     | '/product-thinking'
+    | '/hiring-alfred'
     | '/case-studies/$slug'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/community-strategy'
-    | '/hiring-alfred'
     | '/product-thinking'
+    | '/_authenticated/hiring-alfred'
     | '/case-studies/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   CommunityStrategyRoute: typeof CommunityStrategyRoute
-  HiringAlfredRoute: typeof HiringAlfredRoute
   ProductThinkingRoute: typeof ProductThinkingRoute
   CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
 }
@@ -104,18 +125,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProductThinkingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/hiring-alfred': {
-      id: '/hiring-alfred'
-      path: '/hiring-alfred'
-      fullPath: '/hiring-alfred'
-      preLoaderRoute: typeof HiringAlfredRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/community-strategy': {
       id: '/community-strategy'
       path: '/community-strategy'
       fullPath: '/community-strategy'
       preLoaderRoute: typeof CommunityStrategyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -132,13 +160,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseStudiesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/hiring-alfred': {
+      id: '/_authenticated/hiring-alfred'
+      path: '/hiring-alfred'
+      fullPath: '/hiring-alfred'
+      preLoaderRoute: typeof AuthenticatedHiringAlfredRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedHiringAlfredRoute: typeof AuthenticatedHiringAlfredRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedHiringAlfredRoute: AuthenticatedHiringAlfredRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   CommunityStrategyRoute: CommunityStrategyRoute,
-  HiringAlfredRoute: HiringAlfredRoute,
   ProductThinkingRoute: ProductThinkingRoute,
   CaseStudiesSlugRoute: CaseStudiesSlugRoute,
 }

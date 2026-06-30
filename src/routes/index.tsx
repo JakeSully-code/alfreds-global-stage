@@ -95,8 +95,13 @@ function Home() {
                 <span className="italic">Scale Human Potential.</span>
               </h1>
             </Reveal>
-            <Reveal delay={0.15}>
-              <p className="mt-7 max-w-xl text-lg text-muted-foreground leading-relaxed">
+            <Reveal delay={0.12}>
+              <p className="mt-5 font-serif italic text-xl md:text-2xl text-[var(--ink)]/80 leading-snug">
+                Product Strategist | Community &amp; Ecosystem Builder | Global Program Leader
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
                 I help organizations translate customer insights into products,
                 partnerships, and communities that create measurable business impact.
               </p>
@@ -138,10 +143,6 @@ function Home() {
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
               />
-              <div className="absolute -bottom-4 -left-4 bg-background border border-border rounded-xl px-4 py-3 shadow-sm">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Currently</div>
-                <div className="text-sm">Founder — ROOMZ</div>
-              </div>
             </div>
           </Reveal>
         </div>
@@ -354,20 +355,34 @@ function Home() {
       <Section id="resume" eyebrow="10 — Resume" title="Three lenses on the same operator." surface>
         <div className="grid md:grid-cols-3 gap-4">
           {[
-            "Programs Management Resume",
-            "Community Resume",
-            "Product Strategy Resume",
+            {
+              label: "Programs Management Resume",
+              descriptor: "For roles in program & operations leadership across global teams.",
+            },
+            {
+              label: "Community Resume",
+              descriptor: "For community, developer relations, and ecosystem-building roles.",
+            },
+            {
+              label: "Product Strategy Resume",
+              descriptor: "For product management and product strategy roles.",
+            },
           ].map((r) => (
             <a
-              key={r}
+              key={r.label}
               href="#"
-              className="group rounded-2xl border border-border bg-background p-6 lift flex items-center justify-between"
+              className="group rounded-2xl border border-border bg-background p-6 lift block"
             >
-              <div>
-                <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">PDF</div>
-                <div className="font-serif text-xl mt-1">{r}</div>
+              <div className="flex items-center justify-between">
+                <div>
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">PDF</div>
+                  <div className="font-serif text-xl mt-1">{r.label}</div>
+                </div>
+                <span className="text-2xl text-muted-foreground group-hover:text-[var(--emerald)] transition-colors">↓</span>
               </div>
-              <span className="text-2xl text-muted-foreground group-hover:text-[var(--emerald)] transition-colors">↓</span>
+              <p className="mt-3 text-xs text-muted-foreground/80 leading-relaxed">
+                {r.descriptor}
+              </p>
             </a>
           ))}
         </div>
