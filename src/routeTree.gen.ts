@@ -10,14 +10,21 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProductThinkingRouteImport } from './routes/product-thinking'
+import { Route as HiringAlfredRouteImport } from './routes/hiring-alfred'
 import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
+import { Route as ApiPublicAccessDecisionRouteImport } from './routes/api/public/access-decision'
 
 const ProductThinkingRoute = ProductThinkingRouteImport.update({
   id: '/product-thinking',
   path: '/product-thinking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HiringAlfredRoute = HiringAlfredRouteImport.update({
+  id: '/hiring-alfred',
+  path: '/hiring-alfred',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CommunityStrategyRoute = CommunityStrategyRouteImport.update({
@@ -40,28 +47,39 @@ const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
   path: '/case-studies/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicAccessDecisionRoute = ApiPublicAccessDecisionRouteImport.update({
+  id: '/api/public/access-decision',
+  path: '/api/public/access-decision',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
+  '/hiring-alfred': typeof HiringAlfredRoute
   '/product-thinking': typeof ProductThinkingRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
+  '/hiring-alfred': typeof HiringAlfredRoute
   '/product-thinking': typeof ProductThinkingRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
+  '/hiring-alfred': typeof HiringAlfredRoute
   '/product-thinking': typeof ProductThinkingRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -69,30 +87,38 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/community-strategy'
+    | '/hiring-alfred'
     | '/product-thinking'
     | '/case-studies/$slug'
+    | '/api/public/access-decision'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/community-strategy'
+    | '/hiring-alfred'
     | '/product-thinking'
     | '/case-studies/$slug'
+    | '/api/public/access-decision'
   id:
     | '__root__'
     | '/'
     | '/auth'
     | '/community-strategy'
+    | '/hiring-alfred'
     | '/product-thinking'
     | '/case-studies/$slug'
+    | '/api/public/access-decision'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   CommunityStrategyRoute: typeof CommunityStrategyRoute
+  HiringAlfredRoute: typeof HiringAlfredRoute
   ProductThinkingRoute: typeof ProductThinkingRoute
   CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
+  ApiPublicAccessDecisionRoute: typeof ApiPublicAccessDecisionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -102,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/product-thinking'
       fullPath: '/product-thinking'
       preLoaderRoute: typeof ProductThinkingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hiring-alfred': {
+      id: '/hiring-alfred'
+      path: '/hiring-alfred'
+      fullPath: '/hiring-alfred'
+      preLoaderRoute: typeof HiringAlfredRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/community-strategy': {
@@ -132,6 +165,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseStudiesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/access-decision': {
+      id: '/api/public/access-decision'
+      path: '/api/public/access-decision'
+      fullPath: '/api/public/access-decision'
+      preLoaderRoute: typeof ApiPublicAccessDecisionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -139,8 +179,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   CommunityStrategyRoute: CommunityStrategyRoute,
+  HiringAlfredRoute: HiringAlfredRoute,
   ProductThinkingRoute: ProductThinkingRoute,
   CaseStudiesSlugRoute: CaseStudiesSlugRoute,
+  ApiPublicAccessDecisionRoute: ApiPublicAccessDecisionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
