@@ -61,7 +61,7 @@ const BRIEF: Omit<RecruiterBrief, "email"> = {
   ],
   availability: {
     window: "Tue–Thu · 9am–1pm GMT+1",
-    bookingUrl: "https://calendly.com",
+    bookingUrl: "https://calendly.com/alfredcollinsc/consultingwithalfred",
   },
 };
 
