@@ -95,8 +95,13 @@ function Home() {
                 <span className="italic">Scale Human Potential.</span>
               </h1>
             </Reveal>
-            <Reveal delay={0.15}>
-              <p className="mt-7 max-w-xl text-lg text-muted-foreground leading-relaxed">
+            <Reveal delay={0.12}>
+              <p className="mt-5 font-serif italic text-xl md:text-2xl text-[var(--ink)]/80 leading-snug">
+                Product Strategist | Community &amp; Ecosystem Builder | Global Program Leader
+              </p>
+            </Reveal>
+            <Reveal delay={0.2}>
+              <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
                 I help organizations translate customer insights into products,
                 partnerships, and communities that create measurable business impact.
               </p>
@@ -138,10 +143,6 @@ function Home() {
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
               />
-              <div className="absolute -bottom-4 -left-4 bg-background border border-border rounded-xl px-4 py-3 shadow-sm">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground">Currently</div>
-                <div className="text-sm">Founder — ROOMZ</div>
-              </div>
             </div>
           </Reveal>
         </div>
