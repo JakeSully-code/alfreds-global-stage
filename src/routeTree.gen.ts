@@ -12,10 +12,8 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ProductThinkingRouteImport } from './routes/product-thinking'
 import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
 import { Route as AuthRouteImport } from './routes/auth'
-import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
-import { Route as AuthenticatedHiringAlfredRouteImport } from './routes/_authenticated/hiring-alfred'
 
 const ProductThinkingRoute = ProductThinkingRouteImport.update({
   id: '/product-thinking',
@@ -32,10 +30,6 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
-  id: '/_authenticated',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -46,19 +40,12 @@ const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
   path: '/case-studies/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthenticatedHiringAlfredRoute =
-  AuthenticatedHiringAlfredRouteImport.update({
-    id: '/hiring-alfred',
-    path: '/hiring-alfred',
-    getParentRoute: () => AuthenticatedRouteRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/product-thinking': typeof ProductThinkingRoute
-  '/hiring-alfred': typeof AuthenticatedHiringAlfredRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRoutesByTo {
@@ -66,17 +53,14 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/product-thinking': typeof ProductThinkingRoute
-  '/hiring-alfred': typeof AuthenticatedHiringAlfredRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/product-thinking': typeof ProductThinkingRoute
-  '/_authenticated/hiring-alfred': typeof AuthenticatedHiringAlfredRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRouteTypes {
@@ -86,7 +70,6 @@ export interface FileRouteTypes {
     | '/auth'
     | '/community-strategy'
     | '/product-thinking'
-    | '/hiring-alfred'
     | '/case-studies/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -94,22 +77,18 @@ export interface FileRouteTypes {
     | '/auth'
     | '/community-strategy'
     | '/product-thinking'
-    | '/hiring-alfred'
     | '/case-studies/$slug'
   id:
     | '__root__'
     | '/'
-    | '/_authenticated'
     | '/auth'
     | '/community-strategy'
     | '/product-thinking'
-    | '/_authenticated/hiring-alfred'
     | '/case-studies/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AuthRoute: typeof AuthRoute
   CommunityStrategyRoute: typeof CommunityStrategyRoute
   ProductThinkingRoute: typeof ProductThinkingRoute
@@ -139,13 +118,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated': {
-      id: '/_authenticated'
-      path: ''
-      fullPath: '/'
-      preLoaderRoute: typeof AuthenticatedRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -160,30 +132,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseStudiesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_authenticated/hiring-alfred': {
-      id: '/_authenticated/hiring-alfred'
-      path: '/hiring-alfred'
-      fullPath: '/hiring-alfred'
-      preLoaderRoute: typeof AuthenticatedHiringAlfredRouteImport
-      parentRoute: typeof AuthenticatedRouteRoute
-    }
   }
 }
 
-interface AuthenticatedRouteRouteChildren {
-  AuthenticatedHiringAlfredRoute: typeof AuthenticatedHiringAlfredRoute
-}
-
-const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
-  AuthenticatedHiringAlfredRoute: AuthenticatedHiringAlfredRoute,
-}
-
-const AuthenticatedRouteRouteWithChildren =
-  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AuthRoute: AuthRoute,
   CommunityStrategyRoute: CommunityStrategyRoute,
   ProductThinkingRoute: ProductThinkingRoute,
