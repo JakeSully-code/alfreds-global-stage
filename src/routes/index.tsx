@@ -404,11 +404,11 @@ function Home() {
       <Section id="contact" eyebrow="12 — Contact" title="Let's build something." surface>
         <div className="grid md:grid-cols-2 gap-10">
           <div className="space-y-4">
-            <a href="https://calendly.com" className="flex items-center justify-between rounded-xl border border-border bg-background p-5 lift">
+            <a href="https://calendly.com/alfredcollinsc/consultingwithalfred" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between rounded-xl border border-border bg-background p-5 lift">
               <span>Book a 30-min call</span>
               <span className="font-mono text-xs text-muted-foreground">CALENDLY →</span>
             </a>
-            <a href="https://linkedin.com" className="flex items-center justify-between rounded-xl border border-border bg-background p-5 lift">
+            <a href="https://www.linkedin.com/in/alfred-collins/" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between rounded-xl border border-border bg-background p-5 lift">
               <span>Connect on LinkedIn</span>
               <span className="font-mono text-xs text-muted-foreground">LINKEDIN →</span>
             </a>
