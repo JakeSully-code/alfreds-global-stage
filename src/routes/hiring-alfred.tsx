@@ -249,7 +249,7 @@ function Brief({
             <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">Open windows</div>
             <div className="font-serif text-2xl mt-1">{brief.availability.window}</div>
           </div>
-          <a href={brief.availability.bookingUrl} className="rounded-full bg-[var(--emerald)] text-white px-5 py-3 text-sm font-medium hover:opacity-90">Book a slot →</a>
+          <a href={brief.availability.bookingUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[var(--emerald)] text-white px-5 py-3 text-sm font-medium hover:opacity-90">Book a slot →</a>
         </div>
       </Block>
 
