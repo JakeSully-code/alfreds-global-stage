@@ -9,38 +9,115 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ProductThinkingRouteImport } from './routes/product-thinking'
+import { Route as HiringAlfredRouteImport } from './routes/hiring-alfred'
+import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
 
+const ProductThinkingRoute = ProductThinkingRouteImport.update({
+  id: '/product-thinking',
+  path: '/product-thinking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HiringAlfredRoute = HiringAlfredRouteImport.update({
+  id: '/hiring-alfred',
+  path: '/hiring-alfred',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CommunityStrategyRoute = CommunityStrategyRouteImport.update({
+  id: '/community-strategy',
+  path: '/community-strategy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
+  id: '/case-studies/$slug',
+  path: '/case-studies/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/community-strategy': typeof CommunityStrategyRoute
+  '/hiring-alfred': typeof HiringAlfredRoute
+  '/product-thinking': typeof ProductThinkingRoute
+  '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/community-strategy': typeof CommunityStrategyRoute
+  '/hiring-alfred': typeof HiringAlfredRoute
+  '/product-thinking': typeof ProductThinkingRoute
+  '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/community-strategy': typeof CommunityStrategyRoute
+  '/hiring-alfred': typeof HiringAlfredRoute
+  '/product-thinking': typeof ProductThinkingRoute
+  '/case-studies/$slug': typeof CaseStudiesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/community-strategy'
+    | '/hiring-alfred'
+    | '/product-thinking'
+    | '/case-studies/$slug'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/community-strategy'
+    | '/hiring-alfred'
+    | '/product-thinking'
+    | '/case-studies/$slug'
+  id:
+    | '__root__'
+    | '/'
+    | '/community-strategy'
+    | '/hiring-alfred'
+    | '/product-thinking'
+    | '/case-studies/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CommunityStrategyRoute: typeof CommunityStrategyRoute
+  HiringAlfredRoute: typeof HiringAlfredRoute
+  ProductThinkingRoute: typeof ProductThinkingRoute
+  CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/product-thinking': {
+      id: '/product-thinking'
+      path: '/product-thinking'
+      fullPath: '/product-thinking'
+      preLoaderRoute: typeof ProductThinkingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hiring-alfred': {
+      id: '/hiring-alfred'
+      path: '/hiring-alfred'
+      fullPath: '/hiring-alfred'
+      preLoaderRoute: typeof HiringAlfredRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/community-strategy': {
+      id: '/community-strategy'
+      path: '/community-strategy'
+      fullPath: '/community-strategy'
+      preLoaderRoute: typeof CommunityStrategyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +125,22 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/case-studies/$slug': {
+      id: '/case-studies/$slug'
+      path: '/case-studies/$slug'
+      fullPath: '/case-studies/$slug'
+      preLoaderRoute: typeof CaseStudiesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CommunityStrategyRoute: CommunityStrategyRoute,
+  HiringAlfredRoute: HiringAlfredRoute,
+  ProductThinkingRoute: ProductThinkingRoute,
+  CaseStudiesSlugRoute: CaseStudiesSlugRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -78,8 +78,10 @@ const CASE_STUDIES: Record<string, {
   },
 };
 
+type CaseStudyData = (typeof CASE_STUDIES)[keyof typeof CASE_STUDIES];
+
 export const Route = createFileRoute("/case-studies/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): CaseStudyData => {
     const cs = CASE_STUDIES[params.slug];
     if (!cs) throw notFound();
     return cs;
