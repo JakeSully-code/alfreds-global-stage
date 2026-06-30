@@ -14,6 +14,72 @@ export type Database = {
   }
   public: {
     Tables: {
+      access_links: {
+        Row: {
+          active: boolean
+          created_at: string
+          expires_at: string | null
+          label: string | null
+          token: string
+        }
+        Insert: {
+          active?: boolean
+          created_at?: string
+          expires_at?: string | null
+          label?: string | null
+          token: string
+        }
+        Update: {
+          active?: boolean
+          created_at?: string
+          expires_at?: string | null
+          label?: string | null
+          token?: string
+        }
+        Relationships: []
+      }
+      access_requests: {
+        Row: {
+          approve_token: string
+          company_role: string | null
+          created_at: string
+          decided_at: string | null
+          email: string
+          id: string
+          message: string | null
+          name: string
+          reject_token: string
+          status: string
+          token_expires_at: string
+        }
+        Insert: {
+          approve_token: string
+          company_role?: string | null
+          created_at?: string
+          decided_at?: string | null
+          email: string
+          id?: string
+          message?: string | null
+          name: string
+          reject_token: string
+          status?: string
+          token_expires_at?: string
+        }
+        Update: {
+          approve_token?: string
+          company_role?: string | null
+          created_at?: string
+          decided_at?: string | null
+          email?: string
+          id?: string
+          message?: string | null
+          name?: string
+          reject_token?: string
+          status?: string
+          token_expires_at?: string
+        }
+        Relationships: []
+      }
       allowed_recruiter_emails: {
         Row: {
           created_at: string
