@@ -1,13 +1,12 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 
-const homeAnchors = [
-  { id: "story", label: "Story" },
-  { id: "timeline", label: "Timeline" },
-  { id: "impact", label: "Impact" },
-  { id: "work", label: "Work" },
-  { id: "recognition", label: "Recognition" },
-  { id: "contact", label: "Contact" },
+const links: { to: string; label: string }[] = [
+  { to: "/story", label: "Story" },
+  { to: "/#work", label: "Work" },
+  { to: "/recognition", label: "Recognition" },
+  { to: "/media", label: "Media" },
+  { to: "/#contact", label: "Contact" },
 ];
 
 export function NavBar() {
@@ -35,25 +34,25 @@ export function NavBar() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
-          {homeAnchors.map((a) => (
-            <a key={a.id} href={`/#${a.id}`} className="hover:text-[var(--ink)] transition-colors">
-              {a.label}
-            </a>
-          ))}
-          <Link to="/product-thinking" className="hover:text-[var(--ink)] transition-colors">
-            Product
-          </Link>
-          <Link to="/community-strategy" className="hover:text-[var(--ink)] transition-colors">
-            Community
-          </Link>
+          {links.map((l) =>
+            l.to.startsWith("/#") ? (
+              <a key={l.to} href={l.to} className="hover:text-[var(--ink)] transition-colors">
+                {l.label}
+              </a>
+            ) : (
+              <Link key={l.to} to={l.to} className="hover:text-[var(--ink)] transition-colors">
+                {l.label}
+              </Link>
+            )
+          )}
         </nav>
 
-        <a
-          href="/#contact"
-          className="hidden md:inline-flex items-center rounded-full bg-[var(--ink)] px-4 py-2 text-sm text-white hover:bg-[var(--emerald)] transition-colors"
+        <Link
+          to="/hiring-alfred"
+          className="hidden md:inline-flex items-center rounded-full bg-[var(--emerald)] px-4 py-2 text-sm text-white hover:opacity-90 transition-opacity"
         >
-          Let's talk
-        </a>
+          For Recruiters →
+        </Link>
 
         <button
           aria-label="Toggle menu"
@@ -68,13 +67,22 @@ export function NavBar() {
       {open && (
         <div className="md:hidden border-t border-border bg-background">
           <nav className="container-x py-4 flex flex-col gap-3 text-sm">
-            {homeAnchors.map((a) => (
-              <a key={a.id} href={`/#${a.id}`} onClick={() => setOpen(false)}>
-                {a.label}
-              </a>
-            ))}
+            {links.map((l) =>
+              l.to.startsWith("/#") ? (
+                <a key={l.to} href={l.to} onClick={() => setOpen(false)}>
+                  {l.label}
+                </a>
+              ) : (
+                <Link key={l.to} to={l.to} onClick={() => setOpen(false)}>
+                  {l.label}
+                </Link>
+              )
+            )}
             <Link to="/product-thinking" onClick={() => setOpen(false)}>Product Thinking</Link>
             <Link to="/community-strategy" onClick={() => setOpen(false)}>Community Strategy</Link>
+            <Link to="/hiring-alfred" onClick={() => setOpen(false)} className="text-[var(--emerald)]">
+              For Recruiters →
+            </Link>
           </nav>
         </div>
       )}

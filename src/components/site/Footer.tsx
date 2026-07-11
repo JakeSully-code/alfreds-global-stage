@@ -17,10 +17,13 @@ export function Footer() {
             Explore
           </div>
           <ul className="space-y-2 text-sm">
+            <li><Link to="/story" className="hover:text-[var(--emerald)]">My Story</Link></li>
             <li><a href="/#work" className="hover:text-[var(--emerald)]">Case Studies</a></li>
             <li><Link to="/product-thinking" className="hover:text-[var(--emerald)]">Product Thinking</Link></li>
             <li><Link to="/community-strategy" className="hover:text-[var(--emerald)]">Community Strategy</Link></li>
-            <li><a href="/#resume" className="hover:text-[var(--emerald)]">Resume</a></li>
+            <li><Link to="/recognition" className="hover:text-[var(--emerald)]">Recognition</Link></li>
+            <li><Link to="/media" className="hover:text-[var(--emerald)]">Media</Link></li>
+            <li><Link to="/hiring-alfred" className="hover:text-[var(--emerald)]">For Recruiters</Link></li>
           </ul>
         </div>
         <div>
