@@ -9,7 +9,10 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StoryRouteImport } from './routes/story'
+import { Route as RecognitionRouteImport } from './routes/recognition'
 import { Route as ProductThinkingRouteImport } from './routes/product-thinking'
+import { Route as MediaRouteImport } from './routes/media'
 import { Route as HiringAlfredRouteImport } from './routes/hiring-alfred'
 import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -17,9 +20,24 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
 import { Route as ApiPublicAccessDecisionRouteImport } from './routes/api/public/access-decision'
 
+const StoryRoute = StoryRouteImport.update({
+  id: '/story',
+  path: '/story',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecognitionRoute = RecognitionRouteImport.update({
+  id: '/recognition',
+  path: '/recognition',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProductThinkingRoute = ProductThinkingRouteImport.update({
   id: '/product-thinking',
   path: '/product-thinking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MediaRoute = MediaRouteImport.update({
+  id: '/media',
+  path: '/media',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HiringAlfredRoute = HiringAlfredRouteImport.update({
@@ -58,7 +76,10 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/hiring-alfred': typeof HiringAlfredRoute
+  '/media': typeof MediaRoute
   '/product-thinking': typeof ProductThinkingRoute
+  '/recognition': typeof RecognitionRoute
+  '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
   '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
@@ -67,7 +88,10 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/hiring-alfred': typeof HiringAlfredRoute
+  '/media': typeof MediaRoute
   '/product-thinking': typeof ProductThinkingRoute
+  '/recognition': typeof RecognitionRoute
+  '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
   '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
@@ -77,7 +101,10 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/hiring-alfred': typeof HiringAlfredRoute
+  '/media': typeof MediaRoute
   '/product-thinking': typeof ProductThinkingRoute
+  '/recognition': typeof RecognitionRoute
+  '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
   '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
@@ -88,7 +115,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/community-strategy'
     | '/hiring-alfred'
+    | '/media'
     | '/product-thinking'
+    | '/recognition'
+    | '/story'
     | '/case-studies/$slug'
     | '/api/public/access-decision'
   fileRoutesByTo: FileRoutesByTo
@@ -97,7 +127,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/community-strategy'
     | '/hiring-alfred'
+    | '/media'
     | '/product-thinking'
+    | '/recognition'
+    | '/story'
     | '/case-studies/$slug'
     | '/api/public/access-decision'
   id:
@@ -106,7 +139,10 @@ export interface FileRouteTypes {
     | '/auth'
     | '/community-strategy'
     | '/hiring-alfred'
+    | '/media'
     | '/product-thinking'
+    | '/recognition'
+    | '/story'
     | '/case-studies/$slug'
     | '/api/public/access-decision'
   fileRoutesById: FileRoutesById
@@ -116,18 +152,42 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   CommunityStrategyRoute: typeof CommunityStrategyRoute
   HiringAlfredRoute: typeof HiringAlfredRoute
+  MediaRoute: typeof MediaRoute
   ProductThinkingRoute: typeof ProductThinkingRoute
+  RecognitionRoute: typeof RecognitionRoute
+  StoryRoute: typeof StoryRoute
   CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
   ApiPublicAccessDecisionRoute: typeof ApiPublicAccessDecisionRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/story': {
+      id: '/story'
+      path: '/story'
+      fullPath: '/story'
+      preLoaderRoute: typeof StoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recognition': {
+      id: '/recognition'
+      path: '/recognition'
+      fullPath: '/recognition'
+      preLoaderRoute: typeof RecognitionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/product-thinking': {
       id: '/product-thinking'
       path: '/product-thinking'
       fullPath: '/product-thinking'
       preLoaderRoute: typeof ProductThinkingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/media': {
+      id: '/media'
+      path: '/media'
+      fullPath: '/media'
+      preLoaderRoute: typeof MediaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/hiring-alfred': {
@@ -180,20 +240,13 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   CommunityStrategyRoute: CommunityStrategyRoute,
   HiringAlfredRoute: HiringAlfredRoute,
+  MediaRoute: MediaRoute,
   ProductThinkingRoute: ProductThinkingRoute,
+  RecognitionRoute: RecognitionRoute,
+  StoryRoute: StoryRoute,
   CaseStudiesSlugRoute: CaseStudiesSlugRoute,
   ApiPublicAccessDecisionRoute: ApiPublicAccessDecisionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
