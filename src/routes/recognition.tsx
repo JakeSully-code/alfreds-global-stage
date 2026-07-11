@@ -1,5 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
+import wefSummit1 from "@/assets/wef-summit-1.jpg";
+import wefSummit2 from "@/assets/wef-summit-2.jpg";
+import wefShapers1 from "@/assets/wef-shapers-1.jpg";
+import wefShapers2 from "@/assets/wef-shapers-2.jpg";
+import wefConference from "@/assets/wef-conference.jpg";
+import wefWall from "@/assets/wef-wall.jpg";
+import unGeneva from "@/assets/un-geneva.jpg";
+import cgtn from "@/assets/cgtn.jpg";
 
 export const Route = createFileRoute("/recognition")({
   head: () => ({
@@ -29,7 +37,17 @@ const AWARDS = [
 
 const SPEAKING = [
   { kind: "Speaking", title: "Royal Leadership Institute · Kigali, Rwanda" },
-  { kind: "Television", title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"" },
+  { kind: "Television", title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"", img: cgtn },
+];
+
+const GALLERY = [
+  { src: wefSummit1, alt: "Alfred Collins at the World Economic Forum summit", caption: "Photo: World Economic Forum" },
+  { src: wefSummit2, alt: "Alfred Collins at the World Economic Forum summit", caption: "Photo: World Economic Forum" },
+  { src: wefShapers1, alt: "Alfred Collins with the Global Shapers Community", caption: "Photo: World Economic Forum" },
+  { src: wefShapers2, alt: "Alfred Collins with the Global Shapers Community", caption: "Photo: World Economic Forum" },
+  { src: wefConference, alt: "Alfred Collins at a World Economic Forum conference" },
+  { src: wefWall, alt: "Alfred Collins at the World Economic Forum recognition wall" },
+  { src: unGeneva, alt: "Alfred Collins at the United Nations in Geneva" },
 ];
 
 export default function RecognitionPage() {
@@ -60,6 +78,27 @@ export default function RecognitionPage() {
         </div>
 
         <div className="mt-16">
+          <h2 className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-5">Moments</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            {GALLERY.map((g, i) => (
+              <Reveal key={g.src} delay={i * 0.04}>
+                <div>
+                  <img
+                    src={g.src}
+                    alt={g.alt}
+                    loading="lazy"
+                    className="rounded-xl object-cover aspect-square w-full"
+                  />
+                  {g.caption && (
+                    <div className="mt-1.5 text-[11px] text-muted-foreground">{g.caption}</div>
+                  )}
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        <div className="mt-16">
           <h2 className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-5">Awards</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {AWARDS.map((a) => (
@@ -75,9 +114,19 @@ export default function RecognitionPage() {
           <h2 className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-5">Speaking &amp; Media</h2>
           <div className="grid md:grid-cols-2 gap-4">
             {SPEAKING.map((s) => (
-              <div key={s.title} className="rounded-xl bg-[var(--ink)] text-white p-6">
-                <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">{s.kind}</div>
-                <div className="mt-2 font-serif text-xl">{s.title}</div>
+              <div key={s.title} className="rounded-xl bg-[var(--ink)] text-white overflow-hidden">
+                {s.img && (
+                  <img
+                    src={s.img}
+                    alt={s.title}
+                    loading="lazy"
+                    className="aspect-video w-full object-cover"
+                  />
+                )}
+                <div className="p-6">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">{s.kind}</div>
+                  <div className="mt-2 font-serif text-xl">{s.title}</div>
+                </div>
               </div>
             ))}
           </div>

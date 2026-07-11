@@ -41,7 +41,7 @@ export async function sendEmail({ to, subject, html, replyTo }: SendEmailArgs) {
 }
 
 export function getOwnerEmail(): string {
-  return process.env.OWNER_NOTIFICATION_EMAIL ?? "hello@alfredcollins.com";
+  return process.env.OWNER_NOTIFICATION_EMAIL ?? "alfredcollinsc@gmail.com";
 }
 
 export function getSiteOrigin(): string {

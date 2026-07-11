@@ -1,5 +1,14 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
+import podcast from "@/assets/podcast.jpg";
+import cgtn from "@/assets/cgtn.jpg";
+import favSuit from "@/assets/fav-suit.jpg";
+import favSunset from "@/assets/fav-sunset.jpg";
+import favTerrace from "@/assets/fav-terrace.jpg";
+import chinaUmbrellas from "@/assets/china-umbrellas.jpg";
+import greatwallFriends from "@/assets/greatwall-friends.jpg";
+import genevaStatue from "@/assets/geneva-statue.jpg";
+import qatarAirport from "@/assets/qatar-airport.jpg";
 
 export const Route = createFileRoute("/media")({
   head: () => ({
@@ -16,13 +25,21 @@ export const Route = createFileRoute("/media")({
 const MEDIA = [
   { kind: "Conference Talk", title: "Placeholder title" },
   { kind: "Panel", title: "Placeholder title" },
-  { kind: "Podcast", title: "Placeholder title" },
+  { kind: "Podcast", title: "Placeholder title", img: podcast },
   { kind: "Article", title: "Placeholder title" },
   { kind: "LinkedIn Essay", title: "Placeholder title" },
-  { kind: "Video", title: "Placeholder title" },
+  { kind: "Broadcast", title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"", img: cgtn },
 ];
 
-const PHOTOS = Array.from({ length: 6 }, (_, i) => i);
+const PHOTOS = [
+  { src: favSuit, alt: "Alfred Collins in a suit" },
+  { src: favSunset, alt: "Alfred Collins at sunset" },
+  { src: favTerrace, alt: "Alfred Collins on a terrace" },
+  { src: chinaUmbrellas, alt: "Alfred Collins in China with umbrellas" },
+  { src: greatwallFriends, alt: "Alfred Collins with friends at the Great Wall of China" },
+  { src: genevaStatue, alt: "Alfred Collins by a statue in Geneva" },
+  { src: qatarAirport, alt: "Alfred Collins at the airport in Doha, Qatar" },
+];
 
 function MediaPage() {
   return (
@@ -40,10 +57,25 @@ function MediaPage() {
         <div className="mt-16 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {MEDIA.map((m, i) => (
             <Reveal key={m.kind + i} delay={i * 0.04}>
-              <div className="aspect-[4/3] rounded-xl bg-[var(--surface)] border border-border flex flex-col justify-end p-5 lift">
-                <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
-                <div className="font-serif text-lg mt-1">{m.title}</div>
-              </div>
+              {m.img ? (
+                <div className="rounded-xl bg-[var(--surface)] border border-border overflow-hidden lift">
+                  <img
+                    src={m.img}
+                    alt={m.title}
+                    loading="lazy"
+                    className="aspect-video w-full object-cover"
+                  />
+                  <div className="p-5">
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
+                    <div className="font-serif text-lg mt-1">{m.title}</div>
+                  </div>
+                </div>
+              ) : (
+                <div className="aspect-[4/3] rounded-xl bg-[var(--surface)] border border-border flex flex-col justify-end p-5 lift">
+                  <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
+                  <div className="font-serif text-lg mt-1">{m.title}</div>
+                </div>
+              )}
             </Reveal>
           ))}
         </div>
@@ -51,8 +83,15 @@ function MediaPage() {
         <div className="mt-20">
           <h2 className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-5">Photos</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-            {PHOTOS.map((i) => (
-              <div key={i} className="aspect-square rounded-xl bg-[var(--surface)] border border-border" />
+            {PHOTOS.map((p, i) => (
+              <Reveal key={p.src} delay={i * 0.04}>
+                <img
+                  src={p.src}
+                  alt={p.alt}
+                  loading="lazy"
+                  className="aspect-square rounded-xl border border-border object-cover w-full"
+                />
+              </Reveal>
             ))}
           </div>
         </div>

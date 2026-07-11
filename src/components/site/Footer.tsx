@@ -31,7 +31,7 @@ export function Footer() {
             Connect
           </div>
           <ul className="space-y-2 text-sm">
-            <li><a href="mailto:hello@alfredcollins.com" className="hover:text-[var(--emerald)]">Email</a></li>
+            <li><a href="mailto:alfredcollinsc@gmail.com" className="hover:text-[var(--emerald)]">Email</a></li>
             <li><a href="https://www.linkedin.com/in/alfred-collins/" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--emerald)]">LinkedIn</a></li>
             <li><a href="https://calendly.com/alfredcollinsc/consultingwithalfred" target="_blank" rel="noopener noreferrer" className="hover:text-[var(--emerald)]">Calendly</a></li>
           </ul>

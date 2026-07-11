@@ -1,6 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import portrait from "@/assets/portrait.jpg";
+import heroPortrait from "@/assets/hero-portrait.jpg";
+import greatwallFriends from "@/assets/greatwall-friends.jpg";
+import unGeneva from "@/assets/un-geneva.jpg";
+import genevaStatue from "@/assets/geneva-statue.jpg";
+import qatarAirport from "@/assets/qatar-airport.jpg";
 import { WorldMap } from "@/components/site/WorldMap";
 import { Reveal } from "@/components/site/Reveal";
 import { CountUp } from "@/components/site/CountUp";
@@ -49,6 +53,13 @@ const RECOGNITION_STRIP = [
   "Watson Institute",
   "Global Shapers",
   "Microsoft Certified Educator",
+];
+
+const GLOBAL_FOOTPRINT = [
+  { src: greatwallFriends, alt: "Alfred Collins with friends at the Great Wall of China", caption: "Great Wall of China" },
+  { src: unGeneva, alt: "Alfred Collins at the United Nations in Geneva", caption: "United Nations, Geneva" },
+  { src: genevaStatue, alt: "Alfred Collins by a statue in Geneva, Switzerland", caption: "Geneva, Switzerland" },
+  { src: qatarAirport, alt: "Alfred Collins at the airport in Doha, Qatar", caption: "Doha, Qatar" },
 ];
 
 function Home() {
@@ -113,10 +124,11 @@ function Home() {
             <div className="relative mx-auto max-w-sm">
               <div className="absolute -inset-3 rounded-3xl bg-[var(--surface)]" />
               <motion.img
-                src={portrait}
+                src={heroPortrait}
                 alt="Alfred Collins"
                 width={1024}
                 height={1280}
+                loading="lazy"
                 className="relative rounded-2xl object-cover aspect-[4/5] w-full shadow-[0_30px_80px_-30px_rgba(16,20,24,0.35)]"
                 initial={{ scale: 1.02 }}
                 animate={{ scale: 1 }}
@@ -224,6 +236,27 @@ function Home() {
         </div>
       </Section>
 
+      {/* GLOBAL FOOTPRINT */}
+      <Section id="global-footprint">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {GLOBAL_FOOTPRINT.map((g, i) => (
+            <Reveal key={g.caption} delay={i * 0.05}>
+              <div className="group">
+                <img
+                  src={g.src}
+                  alt={g.alt}
+                  loading="lazy"
+                  className="rounded-xl object-cover aspect-square w-full"
+                />
+                <div className="mt-2 font-mono text-[10px] uppercase tracking-widest text-muted-foreground">
+                  {g.caption}
+                </div>
+              </div>
+            </Reveal>
+          ))}
+        </div>
+      </Section>
+
       {/* CURRENT FOCUS */}
       <Section id="focus" eyebrow="05 — Current Focus">
         <Reveal>
@@ -248,8 +281,8 @@ function Home() {
               <span>Connect on LinkedIn</span>
               <span className="font-mono text-xs text-muted-foreground">LINKEDIN →</span>
             </a>
-            <a href="mailto:hello@alfredcollins.com" className="flex items-center justify-between rounded-xl border border-border bg-background p-5 lift">
-              <span>hello@alfredcollins.com</span>
+            <a href="mailto:alfredcollinsc@gmail.com" className="flex items-center justify-between rounded-xl border border-border bg-background p-5 lift">
+              <span>alfredcollinsc@gmail.com</span>
               <span className="font-mono text-xs text-muted-foreground">EMAIL →</span>
             </a>
           </div>

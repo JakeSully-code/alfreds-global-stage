@@ -1,5 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
+import storyCandid from "@/assets/story-candid.jpg";
+import storyGreatwall from "@/assets/story-greatwall.jpg";
+import storyChinaYouth from "@/assets/story-china-youth.jpg";
 
 export const Route = createFileRoute("/story")({
   head: () => ({
@@ -45,6 +48,21 @@ function StoryPage() {
                 something you create for others.
               </p>
             </Reveal>
+          </div>
+        </div>
+
+        <Reveal>
+          <img
+            src={storyCandid}
+            alt="Candid photo of Alfred Collins"
+            loading="lazy"
+            className="mt-14 w-full rounded-2xl object-cover aspect-[21/9]"
+          />
+        </Reveal>
+
+        <div className="mt-14 grid lg:grid-cols-12 gap-12">
+          <div className="lg:col-span-4" />
+          <div className="lg:col-span-8 text-[1.0625rem] md:text-lg text-foreground/85 leading-[1.8] font-sans space-y-6 max-w-[68ch]">
             <Reveal delay={0.1}>
               <p>
                 Born into a low-income family and raised by a single mother as the
@@ -106,6 +124,16 @@ function StoryPage() {
                 been trusted with has been built on those foundations.
               </p>
             </Reveal>
+
+            <Reveal delay={0.21}>
+              <img
+                src={storyGreatwall}
+                alt="Alfred Collins at the Great Wall of China"
+                loading="lazy"
+                className="my-10 rounded-2xl object-cover aspect-video w-full"
+              />
+            </Reveal>
+
             <Reveal delay={0.22}>
               <p>
                 Over the past several years, I've had the privilege of working across
@@ -120,6 +148,15 @@ function StoryPage() {
             </Reveal>
             <Reveal delay={0.24}>
               <p>Different organizations. Different industries. The same underlying mission.</p>
+            </Reveal>
+
+            <Reveal delay={0.25}>
+              <img
+                src={storyChinaYouth}
+                alt="Alfred Collins with young people in China"
+                loading="lazy"
+                className="my-10 rounded-2xl object-cover aspect-video w-full"
+              />
             </Reveal>
 
             <Reveal delay={0.26}>
