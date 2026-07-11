@@ -15,10 +15,10 @@ export const Route = createFileRoute("/")({
         content:
           "Product strategist, systems thinker, entrepreneur, and global community leader. Building products, communities, and systems that scale human potential.",
       },
-      { property: "og:title", content: "Alfred Collins" },
+      { property: "og:title", content: "Alfred Collins — Product, Community & Systems Leader" },
       {
         property: "og:description",
-        content: "Building products, communities, and systems that scale human potential.",
+        content: "Product strategist, systems thinker, entrepreneur, and global community leader. Building products, communities, and systems that scale human potential.",
       },
     ],
   }),
