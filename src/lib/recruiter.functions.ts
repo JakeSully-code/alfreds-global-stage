@@ -1,4 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
+import { getRequest } from "@tanstack/react-start/server";
 
 export type RecruiterBrief = {
   email: string;
@@ -93,8 +94,9 @@ function randomToken(bytes = 24): string {
   return Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-// Public: recruiter requests the brief. Creates a share-link token and emails it
-// straight to the requester, plus a heads-up to the owner. No login required.
+// Public: recruiter requests the brief. Creates a share-link token and returns
+// the brief URL — the client sends the actual emails via EmailJS (see
+// src/lib/emailjs.client.ts), since email delivery needs no server secret that way.
 export const requestBrief = createServerFn({ method: "POST" })
   .inputValidator((data: { name: string; email: string; companyRole?: string }) => {
     const name = String(data?.name ?? "").trim();
@@ -123,66 +125,11 @@ export const requestBrief = createServerFn({ method: "POST" })
     });
     if (insertErr) throw new Error(insertErr.message);
 
-    const { sendEmail, getOwnerEmail, getSiteOrigin } = await import("@/lib/email.server");
-    const briefUrl = `${getSiteOrigin()}/hiring-alfred?key=${token}`;
+    const request = getRequest();
+    const host = request?.headers.get("host");
+    const proto = request?.headers.get("x-forwarded-proto") ?? "https";
+    const origin = host ? `${proto}://${host}` : "http://localhost:8080";
+    const briefUrl = `${origin}/hiring-alfred?key=${token}`;
 
-    try {
-      const result = await sendEmail({
-        to: data.email,
-        subject: "Your private brief — Alfred Collins",
-        html: requesterEmailHtml({ name: data.name, briefUrl }),
-      });
-      if (result.skipped) {
-        throw new Error("Email sending isn't configured yet (no Resend connection) — the link wasn't sent.");
-      }
-    } catch (e) {
-      console.error("[recruiter] requester email failed", e);
-      throw e instanceof Error ? e : new Error("Couldn't send the email — please try again in a moment.");
-    }
-
-    try {
-      await sendEmail({
-        to: getOwnerEmail(),
-        subject: `New brief request — ${data.name}`,
-        replyTo: data.email,
-        html: ownerNotificationHtml({ name: data.name, email: data.email, companyRole: data.companyRole }),
-      });
-    } catch (e) {
-      console.error("[recruiter] owner notification failed", e);
-    }
-
-    return { state: "sent" as const };
+    return { state: "created" as const, briefUrl };
   });
-
-function escapeHtml(s: string | undefined | null): string {
-  return String(s ?? "")
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#39;");
-}
-
-function requesterEmailHtml(p: { name: string; briefUrl: string }): string {
-  return `<!doctype html><html><body style="font-family:-apple-system,Segoe UI,sans-serif;padding:24px;color:#101418">
-  <div style="max-width:520px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px">
-    <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#16A34A">Hiring Alfred</div>
-    <h1 style="font-family:Georgia,serif;font-size:26px;margin:10px 0">Great to connect, ${escapeHtml(p.name)}.</h1>
-    <p style="color:#4b5563;line-height:1.6">Thanks for reaching out — I'm excited about the opportunity to work together and look forward to connecting. Here's the private brief with everything a hiring team typically needs: why hire me, top competencies, resumes, references, and my availability.</p>
-    <p style="margin-top:20px"><a href="${p.briefUrl}" style="background:#16A34A;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px">Open the brief →</a></p>
-    <p style="margin-top:24px;font-size:12px;color:#9ca3af">This link is just for you — no login needed.</p>
-  </div></body></html>`;
-}
-
-function ownerNotificationHtml(p: { name: string; email: string; companyRole?: string }): string {
-  return `<!doctype html><html><body style="font-family:-apple-system,Segoe UI,sans-serif;background:#fafafa;padding:24px;color:#101418">
-  <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px">
-    <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#16A34A">New brief request</div>
-    <h1 style="font-family:Georgia,serif;font-size:24px;margin:8px 0 16px">${escapeHtml(p.name)} just requested your brief</h1>
-    <table style="font-size:14px;line-height:1.6;color:#374151">
-      <tr><td style="padding-right:12px;color:#6b7280">Email</td><td>${escapeHtml(p.email)}</td></tr>
-      <tr><td style="padding-right:12px;color:#6b7280">Company / Role</td><td>${escapeHtml(p.companyRole) || "—"}</td></tr>
-    </table>
-    <p style="margin-top:20px;font-size:12px;color:#9ca3af">The brief link was already sent to them automatically — no action needed from you.</p>
-  </div></body></html>`;
-}

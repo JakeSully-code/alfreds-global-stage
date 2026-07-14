@@ -5,6 +5,7 @@ import { useState } from "react";
 import { z } from "zod";
 import { Reveal } from "@/components/site/Reveal";
 import { getBriefByToken, requestBrief, type RecruiterBrief } from "@/lib/recruiter.functions";
+import { sendBriefEmails } from "@/lib/emailjs";
 
 const SearchSchema = z.object({ key: z.string().optional() });
 
@@ -56,7 +57,11 @@ function RequestForm() {
   const [companyRole, setCompanyRole] = useState("");
 
   const mutation = useMutation({
-    mutationFn: () => submit({ data: { name, email, companyRole } }),
+    mutationFn: async () => {
+      const result = await submit({ data: { name, email, companyRole } });
+      await sendBriefEmails({ name, email, companyRole, briefUrl: result.briefUrl });
+      return result;
+    },
   });
 
   if (mutation.isSuccess) {
