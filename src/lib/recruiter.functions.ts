@@ -37,17 +37,17 @@ const BRIEF: Omit<RecruiterBrief, "email" | "name"> = {
     {
       label: "Programs Management Resume",
       descriptor: "For roles in program & operations leadership across global teams.",
-      href: "#",
+      href: "/resumes/program-management-resume.pdf",
     },
     {
       label: "Community Resume",
       descriptor: "For community, developer relations, and ecosystem-building roles.",
-      href: "#",
+      href: "/resumes/community-resume.pdf",
     },
     {
       label: "Product Strategy Resume",
       descriptor: "For product management and product strategy roles.",
-      href: "#",
+      href: "/resumes/product-strategy-resume.pdf",
     },
   ],
   references: [

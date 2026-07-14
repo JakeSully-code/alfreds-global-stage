@@ -162,7 +162,7 @@ function Brief({ brief }: { brief: RecruiterBrief }) {
       <Block title="Resume" surface>
         <div className="grid md:grid-cols-3 gap-4">
           {brief.resumes.map((r) => (
-            <a key={r.label} href={r.href} className="rounded-xl border border-border bg-background p-5 lift block">
+            <a key={r.label} href={r.href} download className="rounded-xl border border-border bg-background p-5 lift block">
               <div className="flex items-center justify-between"><span className="text-sm font-medium">{r.label}</span><span className="text-muted-foreground">↓</span></div>
               <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{r.descriptor}</p>
             </a>
