@@ -44,11 +44,11 @@ const STATS = [
 ];
 
 const CASES = [
-  { slug: "osmosis", name: "Osmosis", tag: "Growth · Community", line: "How Community Became A Growth Engine and Proved ROI" },
-  { slug: "roomz", name: "ROOMZ", tag: "0→1 Product", line: "Led Product Adoption & Market Penetration for a Creator Economy Platform" },
-  { slug: "ascent", name: "Ascent Innovation Lab", tag: "AI · Education", line: "Developed an education platform to empower GenZs across the Global South with AI & VR skills" },
-  { slug: "global-collaboration-village", name: "Global Collaboration Village", tag: "Immersive Tech", line: "Leverage immersive tech to provide feedback on stakeholder collaboration in the Metaverse" },
-  { slug: "bulb-africa", name: "The Bulb Africa", tag: "Ecosystem", line: "Scaling developer ecosystems" },
+  { slug: "osmosis", name: "Osmosis", tag: "Growth · Community", line: "How Community Became A Growth Engine and Proved ROI", clickable: true },
+  { slug: "roomz", name: "ROOMZ", tag: "0→1 Product", line: "Led Product Adoption & Market Penetration for a Creator Economy Platform", clickable: true },
+  { slug: "ascent", name: "Ascent Innovation Lab", tag: "AI · Education", line: "Developed an education platform to empower GenZs across the Global South with AI & VR skills", clickable: false },
+  { slug: "global-collaboration-village", name: "Global Collaboration Village", tag: "Immersive Tech", line: "Leverage immersive tech to provide feedback on stakeholder collaboration in the Metaverse", clickable: false },
+  { slug: "bulb-africa", name: "The Bulb Africa", tag: "Ecosystem", line: "Scaling developer ecosystems", clickable: false },
 ];
 
 const RECOGNITION_STRIP = [
@@ -199,20 +199,30 @@ function Home() {
         <div className="grid md:grid-cols-2 gap-6">
           {CASES.map((c, i) => (
             <Reveal key={c.slug} delay={i * 0.06}>
-              <Link
-                to="/case-studies/$slug"
-                params={{ slug: c.slug }}
-                className="group block rounded-2xl border border-border bg-background p-8 lift"
-              >
-                <div className="flex items-center justify-between">
+              {c.clickable ? (
+                <Link
+                  to="/case-studies/$slug"
+                  params={{ slug: c.slug }}
+                  className="group block rounded-2xl border border-border bg-background p-8 lift"
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
+                      {c.tag}
+                    </div>
+                    <span className="text-muted-foreground group-hover:text-[var(--emerald)] transition-colors">→</span>
+                  </div>
+                  <div className="mt-10 font-serif text-3xl">{c.name}</div>
+                  <p className="mt-2 text-muted-foreground">{c.line}</p>
+                </Link>
+              ) : (
+                <div className="block rounded-2xl border border-border bg-background p-8">
                   <div className="font-mono text-xs uppercase tracking-widest text-muted-foreground">
                     {c.tag}
                   </div>
-                  <span className="text-muted-foreground group-hover:text-[var(--emerald)] transition-colors">→</span>
+                  <div className="mt-10 font-serif text-3xl">{c.name}</div>
+                  <p className="mt-2 text-muted-foreground">{c.line}</p>
                 </div>
-                <div className="mt-10 font-serif text-3xl">{c.name}</div>
-                <p className="mt-2 text-muted-foreground">{c.line}</p>
-              </Link>
+              )}
             </Reveal>
           ))}
         </div>

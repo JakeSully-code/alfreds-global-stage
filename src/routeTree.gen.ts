@@ -16,6 +16,7 @@ import { Route as MediaRouteImport } from './routes/media'
 import { Route as HiringAlfredRouteImport } from './routes/hiring-alfred'
 import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as CaseStudiesOsmosisRouteImport } from './routes/case-studies.osmosis'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
 
 const StoryRoute = StoryRouteImport.update({
@@ -53,6 +54,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CaseStudiesOsmosisRoute = CaseStudiesOsmosisRouteImport.update({
+  id: '/case-studies/osmosis',
+  path: '/case-studies/osmosis',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
   id: '/case-studies/$slug',
   path: '/case-studies/$slug',
@@ -68,6 +74,7 @@ export interface FileRoutesByFullPath {
   '/recognition': typeof RecognitionRoute
   '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/case-studies/osmosis': typeof CaseStudiesOsmosisRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByTo {
   '/recognition': typeof RecognitionRoute
   '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/case-studies/osmosis': typeof CaseStudiesOsmosisRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -89,6 +97,7 @@ export interface FileRoutesById {
   '/recognition': typeof RecognitionRoute
   '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
+  '/case-studies/osmosis': typeof CaseStudiesOsmosisRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -101,6 +110,7 @@ export interface FileRouteTypes {
     | '/recognition'
     | '/story'
     | '/case-studies/$slug'
+    | '/case-studies/osmosis'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -111,6 +121,7 @@ export interface FileRouteTypes {
     | '/recognition'
     | '/story'
     | '/case-studies/$slug'
+    | '/case-studies/osmosis'
   id:
     | '__root__'
     | '/'
@@ -121,6 +132,7 @@ export interface FileRouteTypes {
     | '/recognition'
     | '/story'
     | '/case-studies/$slug'
+    | '/case-studies/osmosis'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -132,6 +144,7 @@ export interface RootRouteChildren {
   RecognitionRoute: typeof RecognitionRoute
   StoryRoute: typeof StoryRoute
   CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
+  CaseStudiesOsmosisRoute: typeof CaseStudiesOsmosisRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/case-studies/osmosis': {
+      id: '/case-studies/osmosis'
+      path: '/case-studies/osmosis'
+      fullPath: '/case-studies/osmosis'
+      preLoaderRoute: typeof CaseStudiesOsmosisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/case-studies/$slug': {
       id: '/case-studies/$slug'
       path: '/case-studies/$slug'
@@ -204,6 +224,7 @@ const rootRouteChildren: RootRouteChildren = {
   RecognitionRoute: RecognitionRoute,
   StoryRoute: StoryRoute,
   CaseStudiesSlugRoute: CaseStudiesSlugRoute,
+  CaseStudiesOsmosisRoute: CaseStudiesOsmosisRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

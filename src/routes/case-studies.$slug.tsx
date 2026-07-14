@@ -8,24 +8,6 @@ const CASE_STUDIES: Record<string, {
   metrics: { value: string; label: string }[];
   sections: { h: string; p: string }[];
 }> = {
-  osmosis: {
-    name: "Osmosis from Elsevier",
-    tagline: "How Community Became A Growth Engine and Proved ROI.",
-    themes: ["Customer Discovery", "Product Insights", "Partnerships", "Referral Growth", "Adoption", "Cross-functional Leadership"],
-    metrics: [
-      { value: "50K+", label: "Referrals" },
-      { value: "60+", label: "Countries" },
-      { value: "1,000+", label: "Ambassadors" },
-      { value: "$62K+", label: "Partnerships" },
-    ],
-    sections: [
-      { h: "The Opportunity", p: "[Placeholder] Osmosis served learners in medicine and the health professions globally. The growth question was simple to ask and hard to answer: how do we turn delighted students into the primary growth channel?" },
-      { h: "Discovery", p: "[Placeholder] Hundreds of conversations across regions surfaced a clear pattern — students wanted leadership, not perks." },
-      { h: "The System", p: "[Placeholder] Designed an ambassador architecture with clear tiers, feedback loops, and product hooks." },
-      { h: "Outcome", p: "[Placeholder] Referral, retention, and partnership outcomes followed — captured in the metric strip above." },
-      { h: "Lessons", p: "[Placeholder] Community is operational, not magical. Build it like a product." },
-    ],
-  },
   roomz: {
     name: "ROOMZ",
     tagline: "Led Product Adoption & Market Penetration for a Creator Economy Platform.",
