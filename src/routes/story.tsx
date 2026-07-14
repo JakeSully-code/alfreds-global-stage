@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
 import storyCandid from "@/assets/story-candid.jpg";
 import storyGreatwall from "@/assets/story-greatwall.jpg";
-import storyChinaYouth from "@/assets/story-china-youth.jpg";
+import heroPortrait from "@/assets/hero-portrait.jpg";
 
 export const Route = createFileRoute("/story")({
   head: () => ({
@@ -56,7 +56,7 @@ function StoryPage() {
             src={storyCandid}
             alt="Candid photo of Alfred Collins"
             loading="lazy"
-            className="mt-14 w-full rounded-2xl object-cover aspect-[21/9]"
+            className="mt-14 w-full rounded-2xl object-cover aspect-[16/9]"
           />
         </Reveal>
 
@@ -130,7 +130,7 @@ function StoryPage() {
                 src={storyGreatwall}
                 alt="Alfred Collins at the Great Wall of China"
                 loading="lazy"
-                className="my-10 rounded-2xl object-cover aspect-video w-full"
+                className="my-10 rounded-2xl object-cover aspect-[4/5] w-full max-w-md mx-auto"
               />
             </Reveal>
 
@@ -152,10 +152,10 @@ function StoryPage() {
 
             <Reveal delay={0.25}>
               <img
-                src={storyChinaYouth}
-                alt="Alfred Collins with young people in China"
+                src={heroPortrait}
+                alt="Alfred Collins"
                 loading="lazy"
-                className="my-10 rounded-2xl object-cover aspect-video w-full"
+                className="my-10 rounded-2xl object-cover aspect-[4/5] w-full max-w-md mx-auto"
               />
             </Reveal>
 

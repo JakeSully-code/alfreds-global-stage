@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal } from "@/components/site/Reveal";
 import podcast from "@/assets/podcast.jpg";
 import cgtn from "@/assets/cgtn.jpg";
+import linkedinEssay from "@/assets/linkedin-essay.jpg";
 import favSuit from "@/assets/fav-suit.jpg";
 import favSunset from "@/assets/fav-sunset.jpg";
 import favTerrace from "@/assets/fav-terrace.jpg";
@@ -27,8 +28,18 @@ const MEDIA = [
   { kind: "Panel", title: "Placeholder title" },
   { kind: "Podcast", title: "Placeholder title", img: podcast },
   { kind: "Article", title: "Placeholder title" },
-  { kind: "LinkedIn Essay", title: "Placeholder title" },
-  { kind: "Broadcast", title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"", img: cgtn },
+  {
+    kind: "LinkedIn Essay",
+    title: "Placeholder title",
+    img: linkedinEssay,
+    href: "https://www.linkedin.com/feed/update/urn:li:activity:7333280313344700419/",
+  },
+  {
+    kind: "Broadcast",
+    title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"",
+    img: cgtn,
+    href: "https://www.youtube.com/watch?v=_33jgAvXAZ4&t=637s",
+  },
 ];
 
 const PHOTOS = [
@@ -55,29 +66,44 @@ function MediaPage() {
         </Reveal>
 
         <div className="mt-16 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
-          {MEDIA.map((m, i) => (
-            <Reveal key={m.kind + i} delay={i * 0.04}>
-              {m.img ? (
-                <div className="rounded-xl bg-[var(--surface)] border border-border overflow-hidden lift">
-                  <img
-                    src={m.img}
-                    alt={m.title}
-                    loading="lazy"
-                    className="aspect-video w-full object-cover"
-                  />
-                  <div className="p-5">
+          {MEDIA.map((m, i) => {
+            if (!m.img) {
+              return (
+                <Reveal key={m.kind + i} delay={i * 0.04}>
+                  <div className="aspect-[4/3] rounded-xl bg-[var(--surface)] border border-border flex flex-col justify-end p-5 lift">
                     <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
                     <div className="font-serif text-lg mt-1">{m.title}</div>
                   </div>
-                </div>
-              ) : (
-                <div className="aspect-[4/3] rounded-xl bg-[var(--surface)] border border-border flex flex-col justify-end p-5 lift">
+                </Reveal>
+              );
+            }
+            const content = (
+              <>
+                <img
+                  src={m.img}
+                  alt={m.title}
+                  loading="lazy"
+                  className="aspect-video w-full object-cover"
+                />
+                <div className="p-5">
                   <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
                   <div className="font-serif text-lg mt-1">{m.title}</div>
                 </div>
-              )}
-            </Reveal>
-          ))}
+              </>
+            );
+            const className = "block rounded-xl bg-[var(--surface)] border border-border overflow-hidden lift";
+            return (
+              <Reveal key={m.kind + i} delay={i * 0.04}>
+                {m.href ? (
+                  <a href={m.href} target="_blank" rel="noopener noreferrer" className={className}>
+                    {content}
+                  </a>
+                ) : (
+                  <div className={className}>{content}</div>
+                )}
+              </Reveal>
+            );
+          })}
         </div>
 
         <div className="mt-20">

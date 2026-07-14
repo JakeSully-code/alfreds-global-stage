@@ -10,7 +10,7 @@ const CASE_STUDIES: Record<string, {
 }> = {
   osmosis: {
     name: "Osmosis from Elsevier",
-    tagline: "How community became a growth engine.",
+    tagline: "How Community Became A Growth Engine and Proved ROI.",
     themes: ["Customer Discovery", "Product Insights", "Partnerships", "Referral Growth", "Adoption", "Cross-functional Leadership"],
     metrics: [
       { value: "50K+", label: "Referrals" },
@@ -28,7 +28,7 @@ const CASE_STUDIES: Record<string, {
   },
   roomz: {
     name: "ROOMZ",
-    tagline: "Building a creator economy platform.",
+    tagline: "Led Product Adoption & Market Penetration for a Creator Economy Platform.",
     themes: ["0→1 Product", "Strategy", "Architecture", "Go-to-market"],
     metrics: [
       { value: "0→1", label: "Stage" },
@@ -48,7 +48,7 @@ const CASE_STUDIES: Record<string, {
   },
   ascent: {
     name: "Ascent Innovation Lab",
-    tagline: "Building an AI education platform.",
+    tagline: "Developed an education platform to empower GenZs across the Global South with AI & VR skills.",
     themes: ["Curriculum Design", "AI-Generated Learning", "Personalized Education", "Scaling Vision"],
     metrics: [
       { value: "250+", label: "Learners" },
@@ -61,8 +61,23 @@ const CASE_STUDIES: Record<string, {
       { h: "Impact", p: "[Placeholder] Early outcomes from cohort pilots." },
     ],
   },
+  "global-collaboration-village": {
+    name: "Global Collaboration Village",
+    tagline: "Leverage immersive tech to provide feedback on stakeholder collaboration in the Metaverse.",
+    themes: ["Immersive Tech", "AI", "Sustainability", "Stakeholder Collaboration"],
+    metrics: [
+      { value: "VR/AI", label: "Platform" },
+      { value: "Global", label: "Stakeholders" },
+      { value: "Climate", label: "Focus Area" },
+    ],
+    sections: [
+      { h: "Context", p: "[Placeholder] Climate collaboration across governments, companies, and civil society needed a new kind of room." },
+      { h: "Approach", p: "[Placeholder] Used immersive and AI-powered tools to gather structured feedback from stakeholders inside the Metaverse." },
+      { h: "Outcomes", p: "[Placeholder] Insights that informed sustainability panel sessions and cross-stakeholder alignment." },
+    ],
+  },
   "bulb-africa": {
-    name: "Bulb Africa",
+    name: "The Bulb Africa",
     tagline: "Scaling developer ecosystems.",
     themes: ["Ecosystem Building", "Developer Relations", "Programs"],
     metrics: [

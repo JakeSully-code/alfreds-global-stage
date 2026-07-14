@@ -1,10 +1,13 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { motion } from "framer-motion";
-import heroPortrait from "@/assets/hero-portrait.jpg";
+import heroPhoto from "@/assets/hero-photo10.jpg";
 import greatwallFriends from "@/assets/greatwall-friends.jpg";
 import unGeneva from "@/assets/un-geneva.jpg";
 import genevaStatue from "@/assets/geneva-statue.jpg";
 import qatarAirport from "@/assets/qatar-airport.jpg";
+import wefHq from "@/assets/wef-hq.jpg";
+import dalianChina from "@/assets/dalian-china.jpg";
+import kigali from "@/assets/kigali.jpg";
 import { WorldMap } from "@/components/site/WorldMap";
 import { Reveal } from "@/components/site/Reveal";
 import { CountUp } from "@/components/site/CountUp";
@@ -35,16 +38,17 @@ const STATS = [
   { value: 530, suffix: "+", label: "Community Events" },
   { value: 62, prefix: "$", suffix: "K+", label: "Institutional Partnerships" },
   { value: 20, suffix: "+", label: "Strategic Partnerships" },
-  { value: 1000, suffix: "+", label: "Ambassadors & Students Impacted" },
+  { value: 2000, suffix: "+", label: "Ambassadors & Students Impacted" },
   { value: 250, suffix: "+", label: "Developers Engaged" },
   { value: 200, suffix: "+", label: "Monthly Product Requests Managed" },
 ];
 
 const CASES = [
-  { slug: "osmosis", name: "Osmosis", tag: "Growth · Community", line: "How community became a growth engine." },
-  { slug: "roomz", name: "ROOMZ", tag: "0→1 Product", line: "Building a creator economy platform." },
-  { slug: "ascent", name: "Ascent Innovation Lab", tag: "AI · Education", line: "Building an AI education platform." },
-  { slug: "bulb-africa", name: "Bulb Africa", tag: "Ecosystem", line: "Scaling developer ecosystems." },
+  { slug: "osmosis", name: "Osmosis", tag: "Growth · Community", line: "How Community Became A Growth Engine and Proved ROI" },
+  { slug: "roomz", name: "ROOMZ", tag: "0→1 Product", line: "Led Product Adoption & Market Penetration for a Creator Economy Platform" },
+  { slug: "ascent", name: "Ascent Innovation Lab", tag: "AI · Education", line: "Developed an education platform to empower GenZs across the Global South with AI & VR skills" },
+  { slug: "global-collaboration-village", name: "Global Collaboration Village", tag: "Immersive Tech", line: "Leverage immersive tech to provide feedback on stakeholder collaboration in the Metaverse" },
+  { slug: "bulb-africa", name: "The Bulb Africa", tag: "Ecosystem", line: "Scaling developer ecosystems" },
 ];
 
 const RECOGNITION_STRIP = [
@@ -57,9 +61,12 @@ const RECOGNITION_STRIP = [
 
 const GLOBAL_FOOTPRINT = [
   { src: greatwallFriends, alt: "Alfred Collins with friends at the Great Wall of China", caption: "Great Wall of China" },
-  { src: unGeneva, alt: "Alfred Collins at the United Nations in Geneva", caption: "United Nations, Geneva" },
+  { src: unGeneva, alt: "Alfred Collins at the United Nations headquarters", caption: "United Nations HQ" },
   { src: genevaStatue, alt: "Alfred Collins by a statue in Geneva, Switzerland", caption: "Geneva, Switzerland" },
   { src: qatarAirport, alt: "Alfred Collins at the airport in Doha, Qatar", caption: "Doha, Qatar" },
+  { src: wefHq, alt: "Alfred Collins at the World Economic Forum headquarters", caption: "World Economic Forum HQ" },
+  { src: dalianChina, alt: "Alfred Collins in Dalian, China", caption: "Dalian, China" },
+  { src: kigali, alt: "Alfred Collins in Kigali, Rwanda", caption: "Kigali, Rwanda" },
 ];
 
 function Home() {
@@ -86,17 +93,12 @@ function Home() {
               </h1>
             </Reveal>
             <Reveal delay={0.12}>
-              <p className="mt-7 font-serif italic text-xl md:text-2xl text-[var(--ink)] leading-snug">
-                Community &amp; Ecosystem Builder | Global Program Leader | Product Strategist
-              </p>
-            </Reveal>
-            <Reveal delay={0.2}>
               <p className="mt-6 max-w-xl text-lg text-muted-foreground leading-relaxed">
                 I help organizations translate customer insights into products,
                 partnerships, and communities that create measurable business impact.
               </p>
             </Reveal>
-            <Reveal delay={0.25}>
+            <Reveal delay={0.2}>
               <div className="mt-9 flex flex-wrap gap-3">
                 <a
                   href="#work"
@@ -104,12 +106,6 @@ function Home() {
                 >
                   View My Work
                 </a>
-                <Link
-                  to="/hiring-alfred"
-                  className="inline-flex items-center rounded-full bg-[var(--ink)] px-6 py-3 text-sm font-medium text-white hover:opacity-90 transition"
-                >
-                  For Recruiters →
-                </Link>
                 <a
                   href="#contact"
                   className="inline-flex items-center rounded-full border border-border bg-background/60 backdrop-blur px-6 py-3 text-sm font-medium text-[var(--ink)] hover:border-[var(--ink)] transition"
@@ -124,7 +120,7 @@ function Home() {
             <div className="relative mx-auto max-w-sm">
               <div className="absolute -inset-3 rounded-3xl bg-[var(--surface)]" />
               <motion.img
-                src={heroPortrait}
+                src={heroPhoto}
                 alt="Alfred Collins"
                 width={1024}
                 height={1280}
@@ -134,6 +130,11 @@ function Home() {
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
               />
+              <div className="relative mt-5 rounded-2xl border border-[var(--emerald)]/30 bg-background/80 backdrop-blur px-6 py-4 shadow-[0_20px_50px_-25px_rgba(16,20,24,0.3)]">
+                <p className="font-serif italic text-lg md:text-xl text-[var(--ink)] leading-snug text-center">
+                  Community &amp; Ecosystem Builder | Global Program Leader | Product Strategist
+                </p>
+              </div>
             </div>
           </Reveal>
         </div>
@@ -257,20 +258,8 @@ function Home() {
         </div>
       </Section>
 
-      {/* CURRENT FOCUS */}
-      <Section id="focus" eyebrow="05 — Current Focus">
-        <Reveal>
-          <p className="font-serif text-3xl md:text-4xl leading-tight max-w-3xl">
-            Currently speaking on{" "}
-            <span className="italic text-[var(--emerald)]">Community, AI, Product</span>{" "}
-            and <span className="italic text-[var(--emerald)]">Education</span> — and
-            building ROOMZ.
-          </p>
-        </Reveal>
-      </Section>
-
       {/* CONTACT */}
-      <Section id="contact" eyebrow="06 — Contact" title="Let's build something." surface>
+      <Section id="contact" eyebrow="05 — Contact" title="Let's build something." surface>
         <div className="grid md:grid-cols-2 gap-10">
           <div className="space-y-4">
             <a href="https://calendly.com/alfredcollinsc/consultingwithalfred" target="_blank" rel="noopener noreferrer" className="flex items-center justify-between rounded-xl border border-border bg-background p-5 lift">

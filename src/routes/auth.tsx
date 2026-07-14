@@ -74,7 +74,6 @@ function AuthPage() {
         </h1>
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
           Enter your work email. We'll send a one-tap magic link — no password needed.
-          Access is limited to invited recruiters and hiring teams.
         </p>
 
         {status === "sent" ? (

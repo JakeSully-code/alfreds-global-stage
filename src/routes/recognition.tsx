@@ -6,8 +6,9 @@ import wefShapers1 from "@/assets/wef-shapers-1.jpg";
 import wefShapers2 from "@/assets/wef-shapers-2.jpg";
 import wefConference from "@/assets/wef-conference.jpg";
 import wefWall from "@/assets/wef-wall.jpg";
-import unGeneva from "@/assets/un-geneva.jpg";
+import unHq from "@/assets/un-hq.jpg";
 import cgtn from "@/assets/cgtn.jpg";
+import kigali from "@/assets/kigali.jpg";
 
 export const Route = createFileRoute("/recognition")({
   head: () => ({
@@ -29,6 +30,7 @@ const FELLOWSHIPS = [
   { name: "Microsoft Certified Educator", note: "Recognized educator credential." },
   { name: "McKinsey Forward", note: "Leadership & problem-solving program." },
   { name: "Community MBA", note: "Selective community strategy program." },
+  { name: "Global Collaboration Village", note: "AI & Immersive tech for Sustainability (climate panel sessions)." },
 ];
 
 const AWARDS = [
@@ -36,8 +38,8 @@ const AWARDS = [
 ];
 
 const SPEAKING = [
-  { kind: "Speaking", title: "Royal Leadership Institute · Kigali, Rwanda" },
-  { kind: "Television", title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"", img: cgtn },
+  { kind: "Speaking", title: "Royal Leadership Institute · Kigali, Rwanda", img: kigali },
+  { kind: "Television", title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"", img: cgtn, href: "https://www.youtube.com/watch?v=_33jgAvXAZ4&t=637s" },
 ];
 
 const GALLERY = [
@@ -47,7 +49,7 @@ const GALLERY = [
   { src: wefShapers2, alt: "Alfred Collins with the Global Shapers Community", caption: "Photo: World Economic Forum" },
   { src: wefConference, alt: "Alfred Collins at a World Economic Forum conference" },
   { src: wefWall, alt: "Alfred Collins at the World Economic Forum recognition wall" },
-  { src: unGeneva, alt: "Alfred Collins at the United Nations in Geneva" },
+  { src: unHq, alt: "Alfred Collins at the United Nations headquarters" },
 ];
 
 export default function RecognitionPage() {
@@ -113,22 +115,34 @@ export default function RecognitionPage() {
         <div className="mt-16">
           <h2 className="font-mono text-[11px] uppercase tracking-widest text-muted-foreground mb-5">Speaking &amp; Media</h2>
           <div className="grid md:grid-cols-2 gap-4">
-            {SPEAKING.map((s) => (
-              <div key={s.title} className="rounded-xl bg-[var(--ink)] text-white overflow-hidden">
-                {s.img && (
-                  <img
-                    src={s.img}
-                    alt={s.title}
-                    loading="lazy"
-                    className="aspect-video w-full object-cover"
-                  />
-                )}
-                <div className="p-6">
-                  <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">{s.kind}</div>
-                  <div className="mt-2 font-serif text-xl">{s.title}</div>
+            {SPEAKING.map((s) => {
+              const content = (
+                <>
+                  {s.img && (
+                    <img
+                      src={s.img}
+                      alt={s.title}
+                      loading="lazy"
+                      className="aspect-video w-full object-cover"
+                    />
+                  )}
+                  <div className="p-6">
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">{s.kind}</div>
+                    <div className="mt-2 font-serif text-xl">{s.title}</div>
+                  </div>
+                </>
+              );
+              const className = "rounded-xl bg-[var(--ink)] text-white overflow-hidden block";
+              return s.href ? (
+                <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className={`${className} lift`}>
+                  {content}
+                </a>
+              ) : (
+                <div key={s.title} className={className}>
+                  {content}
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
