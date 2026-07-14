@@ -127,14 +127,17 @@ export const requestBrief = createServerFn({ method: "POST" })
     const briefUrl = `${getSiteOrigin()}/hiring-alfred?key=${token}`;
 
     try {
-      await sendEmail({
+      const result = await sendEmail({
         to: data.email,
         subject: "Your private brief — Alfred Collins",
         html: requesterEmailHtml({ name: data.name, briefUrl }),
       });
+      if (result.skipped) {
+        throw new Error("Email sending isn't configured yet (no Resend connection) — the link wasn't sent.");
+      }
     } catch (e) {
       console.error("[recruiter] requester email failed", e);
-      throw new Error("Couldn't send the email — please try again in a moment.");
+      throw e instanceof Error ? e : new Error("Couldn't send the email — please try again in a moment.");
     }
 
     try {
