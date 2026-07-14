@@ -6,7 +6,7 @@ export type RecruiterBrief = {
   name?: string;
   whyHire: string[];
   competencies: string[];
-  resumes: { label: string; descriptor: string; href: string }[];
+  resumes: { label: string; descriptor: string; href: string; filename: string }[];
   references: { name: string; note: string }[];
   cases: { slug: string; title: string; line?: string }[];
   availability: { bookingUrl: string };
@@ -38,16 +38,19 @@ const BRIEF: Omit<RecruiterBrief, "email" | "name"> = {
       label: "Programs Management Resume",
       descriptor: "For roles in program & operations leadership across global teams.",
       href: "/resumes/program-management-resume.pdf",
+      filename: "Alfred Collins - Programs Management Resume.pdf",
     },
     {
       label: "Community Resume",
       descriptor: "For community, developer relations, and ecosystem-building roles.",
       href: "/resumes/community-resume.pdf",
+      filename: "Alfred Collins - Community Resume.pdf",
     },
     {
       label: "Product Strategy Resume",
       descriptor: "For product management and product strategy roles.",
       href: "/resumes/product-strategy-resume.pdf",
+      filename: "Alfred Collins - Product Strategy Resume.pdf",
     },
   ],
   references: [
