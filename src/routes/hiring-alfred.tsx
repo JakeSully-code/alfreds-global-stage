@@ -47,7 +47,7 @@ function ShareLinkView({ shareToken }: { shareToken: string }) {
       </Centered>
     );
   }
-  return <Brief brief={data} contextNote={data.name ? `Prepared for ${data.name}` : "Private brief"} />;
+  return <Brief brief={data} />;
 }
 
 function RequestForm() {
@@ -133,20 +133,15 @@ function RequestForm() {
   );
 }
 
-function Brief({ brief, contextNote }: { brief: RecruiterBrief; contextNote: string }) {
+function Brief({ brief }: { brief: RecruiterBrief }) {
   return (
     <div>
       <header className="container-x pt-20 pb-10">
-        <Reveal><div className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--emerald)]">For hiring teams · confidential · {contextNote}</div></Reveal>
+        <Reveal><div className="font-mono text-xs uppercase tracking-[0.2em] text-[var(--emerald)]">For hiring teams · confidential</div></Reveal>
         <Reveal delay={0.05}>
           <h1 className="mt-4 font-serif text-5xl md:text-7xl leading-[1.02] tracking-tight">
             Hiring <span className="italic">Alfred.</span>
           </h1>
-        </Reveal>
-        <Reveal delay={0.1}>
-          <p className="mt-6 max-w-2xl text-lg text-muted-foreground">
-            A sharp, one-page brief built for the moment between "interesting profile" and "let's talk."
-          </p>
         </Reveal>
       </header>
 
@@ -162,10 +157,6 @@ function Brief({ brief, contextNote }: { brief: RecruiterBrief; contextNote: str
             <span key={c} className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-mono uppercase tracking-wider">{c}</span>
           ))}
         </div>
-      </Block>
-
-      <Block title="Leadership philosophy">
-        <blockquote className="border-l-2 border-[var(--emerald)] pl-6 font-serif text-2xl italic leading-snug max-w-3xl">"{brief.philosophy}"</blockquote>
       </Block>
 
       <Block title="Resume" surface>
@@ -192,21 +183,24 @@ function Brief({ brief, contextNote }: { brief: RecruiterBrief; contextNote: str
 
       <Block title="Case studies" surface>
         <div className="grid md:grid-cols-2 gap-4">
-          {brief.cases.map((c) => (
-            <Link key={c.slug} to="/case-studies/$slug" params={{ slug: c.slug }} className="rounded-xl border border-border bg-background p-5 lift flex items-center justify-between text-sm">
-              <span>{c.title}</span><span className="text-muted-foreground">→</span>
-            </Link>
-          ))}
+          {brief.cases.map((c) =>
+            c.line ? (
+              <Link key={c.slug} to="/case-studies/$slug" params={{ slug: c.slug }} className="rounded-xl border border-border bg-background p-5 lift block">
+                <div className="flex items-center justify-between text-sm"><span>{c.title}</span><span className="text-muted-foreground">→</span></div>
+                <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{c.line}</p>
+              </Link>
+            ) : (
+              <Link key={c.slug} to="/case-studies/$slug" params={{ slug: c.slug }} className="rounded-xl border border-border bg-background p-5 lift flex items-center justify-between text-sm">
+                <span>{c.title}</span><span className="text-muted-foreground">→</span>
+              </Link>
+            ),
+          )}
         </div>
       </Block>
 
       <Block title="Interview availability">
-        <div className="rounded-2xl bg-[var(--ink)] text-white p-7 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-          <div>
-            <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">Open windows</div>
-            <div className="font-serif text-2xl mt-1">{brief.availability.window}</div>
-          </div>
-          <a href={brief.availability.bookingUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[var(--emerald)] text-white px-5 py-3 text-sm font-medium hover:opacity-90">Book a slot →</a>
+        <div className="rounded-2xl bg-[var(--ink)] text-white p-7 flex items-center justify-center">
+          <a href={brief.availability.bookingUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[var(--emerald)] text-white px-6 py-3 text-sm font-medium hover:opacity-90">Book A Slot on my Calendar</a>
         </div>
       </Block>
     </div>

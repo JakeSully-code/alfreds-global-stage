@@ -6,19 +6,19 @@ export type RecruiterBrief = {
   name?: string;
   whyHire: string[];
   competencies: string[];
-  philosophy: string;
   resumes: { label: string; descriptor: string; href: string }[];
   references: { name: string; note: string }[];
-  cases: { slug: string; title: string }[];
-  availability: { window: string; bookingUrl: string };
+  cases: { slug: string; title: string; line?: string }[];
+  availability: { bookingUrl: string };
 };
 
 const BRIEF: Omit<RecruiterBrief, "email" | "name"> = {
   whyHire: [
     "Operator who has shipped product, run programs, and scaled communities.",
     "Comfortable across customer, product, partnerships, and exec.",
-    "Global — has built in 60+ countries.",
+    "Global — has built programs & communities with reach across 60+ countries.",
     "Translates strategy into systems people can actually run.",
+    "Experienced supporting institutional partnerships, deals supported with institutions in South Africa, Rwanda, and Poland. Total ROI = $62K.",
   ],
   competencies: [
     "Product Strategy",
@@ -29,9 +29,10 @@ const BRIEF: Omit<RecruiterBrief, "email" | "name"> = {
     "Research",
     "Cross-functional Leadership",
     "Storytelling",
+    "AI-enabled workflows",
+    "Interpersonal Relationships",
+    "Stakeholder Management",
   ],
-  philosophy:
-    "Trust the team to do the work. Build the system that lets them. Hold the standard, not the steering wheel.",
   resumes: [
     {
       label: "Programs Management Resume",
@@ -53,15 +54,20 @@ const BRIEF: Omit<RecruiterBrief, "email" | "name"> = {
     { name: "Shiv Gaglani", note: "Co-founder & CEO, Osmosis (Elsevier) — available on request." },
     { name: "Jorge Mendes", note: "Global Partnerships Leader — available on request." },
     { name: "Victoria Cumberbatch", note: "Community Strategy — available on request." },
+    { name: "Others", note: "Available on request." },
   ],
   cases: [
     { slug: "osmosis", title: "Osmosis — Community as growth engine" },
     { slug: "roomz", title: "ROOMZ — 0→1 product build" },
     { slug: "ascent", title: "Ascent — AI education platform" },
+    {
+      slug: "global-collaboration-village",
+      title: "Global Collaboration Village",
+      line: "Leverage immersive tech to provide feedback on stakeholder collaboration in the Metaverse",
+    },
     { slug: "bulb-africa", title: "Bulb Africa — Developer ecosystems" },
   ],
   availability: {
-    window: "Tue–Thu · 9am–1pm GMT+1",
     bookingUrl: "https://calendly.com/alfredcollinsc/consultingwithalfred",
   },
 };
