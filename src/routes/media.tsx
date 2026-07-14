@@ -72,7 +72,7 @@ function MediaPage() {
                   src={m.img}
                   alt={m.title}
                   loading="lazy"
-                  className="aspect-video w-full object-cover"
+                  className="aspect-video w-full object-cover object-top"
                 />
                 <div className="p-5">
                   <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
