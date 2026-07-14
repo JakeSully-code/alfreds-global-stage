@@ -17,23 +17,32 @@ export type Database = {
       access_links: {
         Row: {
           active: boolean
+          company_role: string | null
           created_at: string
+          email: string | null
           expires_at: string | null
           label: string | null
+          name: string | null
           token: string
         }
         Insert: {
           active?: boolean
+          company_role?: string | null
           created_at?: string
+          email?: string | null
           expires_at?: string | null
           label?: string | null
+          name?: string | null
           token: string
         }
         Update: {
           active?: boolean
+          company_role?: string | null
           created_at?: string
+          email?: string | null
           expires_at?: string | null
           label?: string | null
+          name?: string | null
           token?: string
         }
         Relationships: []

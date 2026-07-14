@@ -1,8 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
-import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 export type RecruiterBrief = {
   email: string;
+  name?: string;
   whyHire: string[];
   competencies: string[];
   philosophy: string;
@@ -12,7 +12,7 @@ export type RecruiterBrief = {
   availability: { window: string; bookingUrl: string };
 };
 
-const BRIEF: Omit<RecruiterBrief, "email"> = {
+const BRIEF: Omit<RecruiterBrief, "email" | "name"> = {
   whyHire: [
     "Operator who has shipped product, run programs, and scaled communities.",
     "Comfortable across customer, product, partnerships, and exec.",
@@ -65,41 +65,7 @@ const BRIEF: Omit<RecruiterBrief, "email"> = {
   },
 };
 
-export type UserBriefResult =
-  | { state: "allowed"; brief: RecruiterBrief }
-  | { state: "pending"; email: string }
-  | { state: "needs_request"; email: string };
-
-// Authenticated: returns either the brief or what state the user is in.
-export const getBriefForUser = createServerFn({ method: "GET" })
-  .middleware([requireSupabaseAuth])
-  .handler(async ({ context }): Promise<UserBriefResult> => {
-    const email = String(context.claims.email ?? "").toLowerCase();
-    if (!email) throw new Error("No email on session.");
-
-    const { data: allow } = await context.supabase
-      .from("allowed_recruiter_emails")
-      .select("email")
-      .eq("email", email)
-      .maybeSingle();
-    if (allow) {
-      return { state: "allowed", brief: { email, ...BRIEF } };
-    }
-
-    // Use admin to check pending without exposing the table to clients.
-    const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { data: pending } = await supabaseAdmin
-      .from("access_requests")
-      .select("id")
-      .eq("status", "pending")
-      .ilike("email", email)
-      .maybeSingle();
-    if (pending) return { state: "pending", email };
-
-    return { state: "needs_request", email };
-  });
-
-// Unauthenticated: brief via share-link token.
+// Unauthenticated: brief via emailed share-link token.
 export const getBriefByToken = createServerFn({ method: "GET" })
   .inputValidator((data: { shareToken: string }) => {
     if (!data?.shareToken || typeof data.shareToken !== "string" || data.shareToken.length < 8) {
@@ -111,14 +77,14 @@ export const getBriefByToken = createServerFn({ method: "GET" })
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
     const { data: link } = await supabaseAdmin
       .from("access_links")
-      .select("token, active, expires_at")
+      .select("token, active, expires_at, name, email")
       .eq("token", data.shareToken)
       .maybeSingle();
     if (!link || !link.active) throw new Error("Link not valid.");
     if (link.expires_at && new Date(link.expires_at).getTime() < Date.now()) {
       throw new Error("Link expired.");
     }
-    return { email: "shared-link", ...BRIEF };
+    return { email: link.email ?? "shared-link", name: link.name ?? undefined, ...BRIEF };
   });
 
 function randomToken(bytes = 24): string {
@@ -127,76 +93,62 @@ function randomToken(bytes = 24): string {
   return Array.from(arr, (b) => b.toString(16).padStart(2, "0")).join("");
 }
 
-// Authenticated: submit an access request (after magic-link sign-in).
-export const submitAccessRequest = createServerFn({ method: "POST" })
-  .middleware([requireSupabaseAuth])
-  .inputValidator((data: { name: string; companyRole?: string; message?: string }) => {
+// Public: recruiter requests the brief. Creates a share-link token and emails it
+// straight to the requester, plus a heads-up to the owner. No login required.
+export const requestBrief = createServerFn({ method: "POST" })
+  .inputValidator((data: { name: string; email: string; companyRole?: string }) => {
     const name = String(data?.name ?? "").trim();
+    const email = String(data?.email ?? "").trim().toLowerCase();
     if (!name || name.length > 120) throw new Error("Name is required.");
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || email.length > 254) {
+      throw new Error("A valid email is required.");
+    }
     return {
       name,
+      email,
       companyRole: String(data?.companyRole ?? "").trim().slice(0, 200) || undefined,
-      message: String(data?.message ?? "").trim().slice(0, 1000) || undefined,
     };
   })
-  .handler(async ({ data, context }) => {
-    const email = String(context.claims.email ?? "").toLowerCase();
-    if (!email) throw new Error("No email on session.");
-
+  .handler(async ({ data }) => {
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
 
-    // Already allowlisted?
-    const { data: allow } = await supabaseAdmin
-      .from("allowed_recruiter_emails")
-      .select("email")
-      .eq("email", email)
-      .maybeSingle();
-    if (allow) return { state: "already_allowed" as const };
-
-    // Existing pending?
-    const { data: existing } = await supabaseAdmin
-      .from("access_requests")
-      .select("id")
-      .eq("status", "pending")
-      .ilike("email", email)
-      .maybeSingle();
-    if (existing) return { state: "already_pending" as const };
-
-    const approve_token = randomToken();
-    const reject_token = randomToken();
-    const { error: insertErr } = await supabaseAdmin.from("access_requests").insert({
-      email,
+    const token = randomToken();
+    const { error: insertErr } = await supabaseAdmin.from("access_links").insert({
+      token,
+      label: data.name,
       name: data.name,
+      email: data.email,
       company_role: data.companyRole ?? null,
-      message: data.message ?? null,
-      approve_token,
-      reject_token,
+      active: true,
     });
     if (insertErr) throw new Error(insertErr.message);
 
-    // Send owner notification email.
     const { sendEmail, getOwnerEmail, getSiteOrigin } = await import("@/lib/email.server");
-    const origin = getSiteOrigin();
-    const approveUrl = `${origin}/api/public/access-decision?token=${approve_token}&action=approve`;
-    const rejectUrl = `${origin}/api/public/access-decision?token=${reject_token}&action=reject`;
+    const briefUrl = `${getSiteOrigin()}/hiring-alfred?key=${token}`;
+
+    try {
+      await sendEmail({
+        to: data.email,
+        subject: "Your private brief — Alfred Collins",
+        html: requesterEmailHtml({ name: data.name, briefUrl }),
+      });
+    } catch (e) {
+      console.error("[recruiter] requester email failed", e);
+      throw new Error("Couldn't send the email — please try again in a moment.");
+    }
+
     try {
       await sendEmail({
         to: getOwnerEmail(),
-        subject: `New recruiter access request — ${data.name}`,
-        replyTo: email,
-        html: ownerEmailHtml({
-          name: data.name,
-          email,
-          companyRole: data.companyRole,
-          message: data.message,
-          approveUrl,
-          rejectUrl,
-        }),
+        subject: `New brief request — ${data.name}`,
+        replyTo: data.email,
+        html: ownerNotificationHtml({ name: data.name, email: data.email, companyRole: data.companyRole }),
       });
     } catch (e) {
-      console.error("[recruiter] owner email failed", e);
+      console.error("[recruiter] owner notification failed", e);
     }
-    return { state: "submitted" as const };
+
+    return { state: "sent" as const };
   });
 
 function escapeHtml(s: string | undefined | null): string {
@@ -208,27 +160,26 @@ function escapeHtml(s: string | undefined | null): string {
     .replace(/'/g, "&#39;");
 }
 
-function ownerEmailHtml(p: {
-  name: string;
-  email: string;
-  companyRole?: string;
-  message?: string;
-  approveUrl: string;
-  rejectUrl: string;
-}): string {
+function requesterEmailHtml(p: { name: string; briefUrl: string }): string {
+  return `<!doctype html><html><body style="font-family:-apple-system,Segoe UI,sans-serif;padding:24px;color:#101418">
+  <div style="max-width:520px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px">
+    <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#16A34A">Hiring Alfred</div>
+    <h1 style="font-family:Georgia,serif;font-size:26px;margin:10px 0">Great to connect, ${escapeHtml(p.name)}.</h1>
+    <p style="color:#4b5563;line-height:1.6">Thanks for reaching out — I'm excited about the opportunity to work together and look forward to connecting. Here's the private brief with everything a hiring team typically needs: why hire me, top competencies, resumes, references, and my availability.</p>
+    <p style="margin-top:20px"><a href="${p.briefUrl}" style="background:#16A34A;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px">Open the brief →</a></p>
+    <p style="margin-top:24px;font-size:12px;color:#9ca3af">This link is just for you — no login needed.</p>
+  </div></body></html>`;
+}
+
+function ownerNotificationHtml(p: { name: string; email: string; companyRole?: string }): string {
   return `<!doctype html><html><body style="font-family:-apple-system,Segoe UI,sans-serif;background:#fafafa;padding:24px;color:#101418">
   <div style="max-width:560px;margin:0 auto;background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:28px">
-    <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#16A34A">Recruiter access request</div>
-    <h1 style="font-family:Georgia,serif;font-size:24px;margin:8px 0 16px">${escapeHtml(p.name)} wants access</h1>
+    <div style="font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:#16A34A">New brief request</div>
+    <h1 style="font-family:Georgia,serif;font-size:24px;margin:8px 0 16px">${escapeHtml(p.name)} just requested your brief</h1>
     <table style="font-size:14px;line-height:1.6;color:#374151">
       <tr><td style="padding-right:12px;color:#6b7280">Email</td><td>${escapeHtml(p.email)}</td></tr>
       <tr><td style="padding-right:12px;color:#6b7280">Company / Role</td><td>${escapeHtml(p.companyRole) || "—"}</td></tr>
     </table>
-    ${p.message ? `<div style="margin-top:16px;padding:14px;border-left:3px solid #16A34A;background:#f6fbf7;font-size:14px;color:#374151">${escapeHtml(p.message)}</div>` : ""}
-    <div style="margin-top:24px;display:flex;gap:12px">
-      <a href="${p.approveUrl}" style="background:#16A34A;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px">Approve</a>
-      <a href="${p.rejectUrl}" style="background:#101418;color:#fff;padding:12px 22px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px">Reject</a>
-    </div>
-    <p style="margin-top:24px;font-size:12px;color:#9ca3af">These links are single-use and expire in 30 days. Anyone with the link can act, so don't forward this email.</p>
+    <p style="margin-top:20px;font-size:12px;color:#9ca3af">The brief link was already sent to them automatically — no action needed from you.</p>
   </div></body></html>`;
 }

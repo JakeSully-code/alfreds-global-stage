@@ -1,17 +1,10 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { z } from "zod";
 import { Reveal } from "@/components/site/Reveal";
-import {
-  getBriefByToken,
-  getBriefForUser,
-  submitAccessRequest,
-  type RecruiterBrief,
-  type UserBriefResult,
-} from "@/lib/recruiter.functions";
-import { supabase } from "@/integrations/supabase/client";
+import { getBriefByToken, requestBrief, type RecruiterBrief } from "@/lib/recruiter.functions";
 
 const SearchSchema = z.object({ key: z.string().optional() });
 
@@ -30,7 +23,7 @@ export const Route = createFileRoute("/hiring-alfred")({
 function HiringAlfredPage() {
   const { key } = Route.useSearch();
   if (key) return <ShareLinkView shareToken={key} />;
-  return <SignedInView />;
+  return <RequestForm />;
 }
 
 function ShareLinkView({ shareToken }: { shareToken: string }) {
@@ -53,130 +46,89 @@ function ShareLinkView({ shareToken }: { shareToken: string }) {
       </Centered>
     );
   }
-  return <Brief brief={data} contextNote="Viewing via share link" hideSignOut />;
+  return <Brief brief={data} contextNote={data.name ? `Prepared for ${data.name}` : "Private brief"} />;
 }
 
-function SignedInView() {
-  const navigate = useNavigate();
-  const [authChecked, setAuthChecked] = useState(false);
-  const [hasUser, setHasUser] = useState(false);
+function RequestForm() {
+  const submit = useServerFn(requestBrief);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [companyRole, setCompanyRole] = useState("");
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (!data.user) {
-        navigate({ to: "/auth", search: { redirect: "/hiring-alfred" } });
-        return;
-      }
-      setHasUser(true);
-      setAuthChecked(true);
-    });
-  }, [navigate]);
-
-  const fetchBrief = useServerFn(getBriefForUser);
-  const { data, isLoading, error, refetch } = useQuery<UserBriefResult>({
-    queryKey: ["brief-for-user"],
-    queryFn: () => fetchBrief(),
-    enabled: hasUser,
-    retry: false,
+  const mutation = useMutation({
+    mutationFn: () => submit({ data: { name, email, companyRole } }),
   });
 
-  if (!authChecked || isLoading) return <Loading label="Verifying access…" />;
-  if (error) {
+  if (mutation.isSuccess) {
     return (
       <Centered>
         <Card>
-          <Eyebrow>Error</Eyebrow>
-          <H1>Couldn't load</H1>
-          <P>Something went wrong. Try again in a moment.</P>
+          <Eyebrow>Sent</Eyebrow>
+          <H1>Check your inbox.</H1>
+          <P>
+            The private brief is on its way to <span className="text-foreground font-medium">{email}</span>.
+          </P>
         </Card>
       </Centered>
     );
   }
-  if (!data) return null;
-
-  if (data.state === "allowed") return <Brief brief={data.brief} contextNote={`Signed in · ${data.brief.email}`} />;
-  if (data.state === "pending") return <PendingView email={data.email} />;
-  return <RequestForm email={data.email} onSubmitted={() => refetch()} />;
-}
-
-function RequestForm({ email, onSubmitted }: { email: string; onSubmitted: () => void }) {
-  const submit = useServerFn(submitAccessRequest);
-  const [name, setName] = useState("");
-  const [companyRole, setCompanyRole] = useState("");
-  const [message, setMessage] = useState("");
-
-  const mutation = useMutation({
-    mutationFn: () => submit({ data: { name, companyRole, message } }),
-    onSuccess: () => onSubmitted(),
-  });
 
   return (
     <Centered>
       <div className="w-full max-w-md rounded-2xl border border-border bg-background p-8 shadow-sm">
         <Eyebrow>Private · Recruiters</Eyebrow>
-        <h1 className="mt-3 font-serif text-4xl tracking-tight">Request access</h1>
+        <h1 className="mt-3 font-serif text-4xl tracking-tight">Request the brief</h1>
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
-          Your email is verified. Tell Alfred who you are and he'll grant access.
+          Tell me who you are and I'll send the private brief straight to your inbox.
         </p>
         <form
           className="mt-6 space-y-3"
           onSubmit={(e) => {
             e.preventDefault();
-            if (name.trim()) mutation.mutate();
+            if (name.trim() && email.trim()) mutation.mutate();
           }}
         >
-          <Field label="Email (verified)">
-            <input value={email} disabled className="w-full rounded-full border border-border bg-[var(--surface)] px-4 py-3 text-sm text-muted-foreground" />
+          <Field label="Full name">
+            <input
+              required
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full rounded-full border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:border-[var(--ink)]"
+            />
           </Field>
-          <Field label="Name">
-            <input required value={name} onChange={(e) => setName(e.target.value)} className="w-full rounded-full border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:border-[var(--ink)]" />
+          <Field label="Email">
+            <input
+              required
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@company.com"
+              className="w-full rounded-full border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:border-[var(--ink)]"
+            />
           </Field>
-          <Field label="Company / Role">
-            <input value={companyRole} onChange={(e) => setCompanyRole(e.target.value)} placeholder="e.g. Stripe — Recruiting" className="w-full rounded-full border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:border-[var(--ink)]" />
-          </Field>
-          <Field label="Message (optional)">
-            <textarea value={message} onChange={(e) => setMessage(e.target.value)} rows={4} className="w-full rounded-2xl border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:border-[var(--ink)]" />
+          <Field label="Company">
+            <input
+              value={companyRole}
+              onChange={(e) => setCompanyRole(e.target.value)}
+              placeholder="e.g. Stripe — Recruiting"
+              className="w-full rounded-full border border-border bg-background px-4 py-3 text-sm focus:outline-none focus:border-[var(--ink)]"
+            />
           </Field>
           {mutation.error && <p className="text-xs text-destructive">{(mutation.error as Error).message}</p>}
           <button
             type="submit"
-            disabled={mutation.isPending || !name.trim()}
+            disabled={mutation.isPending || !name.trim() || !email.trim()}
             className="w-full rounded-full bg-[var(--emerald)] text-white px-5 py-3 text-sm font-medium hover:opacity-90 disabled:opacity-60"
           >
-            {mutation.isPending ? "Sending…" : "Request access"}
+            {mutation.isPending ? "Sending…" : "Send me the brief"}
           </button>
         </form>
-        <SignOutLink />
       </div>
     </Centered>
   );
 }
 
-function PendingView({ email }: { email: string }) {
-  return (
-    <Centered>
-      <Card>
-        <Eyebrow>Pending</Eyebrow>
-        <H1>Request received</H1>
-        <P>
-          Your access request for <span className="text-foreground font-medium">{email}</span> is
-          waiting on Alfred. You'll get an email the moment it's approved.
-        </P>
-        <SignOutLink />
-      </Card>
-    </Centered>
-  );
-}
-
-function Brief({
-  brief,
-  contextNote,
-  hideSignOut,
-}: {
-  brief: RecruiterBrief;
-  contextNote: string;
-  hideSignOut?: boolean;
-}) {
+function Brief({ brief, contextNote }: { brief: RecruiterBrief; contextNote: string }) {
   return (
     <div>
       <header className="container-x pt-20 pb-10">
@@ -252,12 +204,6 @@ function Brief({
           <a href={brief.availability.bookingUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[var(--emerald)] text-white px-5 py-3 text-sm font-medium hover:opacity-90">Book a slot →</a>
         </div>
       </Block>
-
-      {!hideSignOut && (
-        <div className="container-x pb-20">
-          <SignOutLink />
-        </div>
-      )}
     </div>
   );
 }
@@ -279,17 +225,6 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
       <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground">{label}</span>
       <div className="mt-2">{children}</div>
     </label>
-  );
-}
-
-function SignOutLink() {
-  return (
-    <button
-      onClick={async () => { await supabase.auth.signOut(); window.location.href = "/"; }}
-      className="mt-6 text-xs font-mono uppercase tracking-widest text-muted-foreground hover:text-[var(--ink)]"
-    >
-      Sign out
-    </button>
   );
 }
 

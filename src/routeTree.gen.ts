@@ -15,10 +15,8 @@ import { Route as ProductThinkingRouteImport } from './routes/product-thinking'
 import { Route as MediaRouteImport } from './routes/media'
 import { Route as HiringAlfredRouteImport } from './routes/hiring-alfred'
 import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
-import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseStudiesSlugRouteImport } from './routes/case-studies.$slug'
-import { Route as ApiPublicAccessDecisionRouteImport } from './routes/api/public/access-decision'
 
 const StoryRoute = StoryRouteImport.update({
   id: '/story',
@@ -50,11 +48,6 @@ const CommunityStrategyRoute = CommunityStrategyRouteImport.update({
   path: '/community-strategy',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthRoute = AuthRouteImport.update({
-  id: '/auth',
-  path: '/auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -65,15 +58,9 @@ const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
   path: '/case-studies/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiPublicAccessDecisionRoute = ApiPublicAccessDecisionRouteImport.update({
-  id: '/api/public/access-decision',
-  path: '/api/public/access-decision',
-  getParentRoute: () => rootRouteImport,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/hiring-alfred': typeof HiringAlfredRoute
   '/media': typeof MediaRoute
@@ -81,11 +68,9 @@ export interface FileRoutesByFullPath {
   '/recognition': typeof RecognitionRoute
   '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
-  '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/hiring-alfred': typeof HiringAlfredRoute
   '/media': typeof MediaRoute
@@ -93,12 +78,10 @@ export interface FileRoutesByTo {
   '/recognition': typeof RecognitionRoute
   '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
-  '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/auth': typeof AuthRoute
   '/community-strategy': typeof CommunityStrategyRoute
   '/hiring-alfred': typeof HiringAlfredRoute
   '/media': typeof MediaRoute
@@ -106,13 +89,11 @@ export interface FileRoutesById {
   '/recognition': typeof RecognitionRoute
   '/story': typeof StoryRoute
   '/case-studies/$slug': typeof CaseStudiesSlugRoute
-  '/api/public/access-decision': typeof ApiPublicAccessDecisionRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/auth'
     | '/community-strategy'
     | '/hiring-alfred'
     | '/media'
@@ -120,11 +101,9 @@ export interface FileRouteTypes {
     | '/recognition'
     | '/story'
     | '/case-studies/$slug'
-    | '/api/public/access-decision'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/auth'
     | '/community-strategy'
     | '/hiring-alfred'
     | '/media'
@@ -132,11 +111,9 @@ export interface FileRouteTypes {
     | '/recognition'
     | '/story'
     | '/case-studies/$slug'
-    | '/api/public/access-decision'
   id:
     | '__root__'
     | '/'
-    | '/auth'
     | '/community-strategy'
     | '/hiring-alfred'
     | '/media'
@@ -144,12 +121,10 @@ export interface FileRouteTypes {
     | '/recognition'
     | '/story'
     | '/case-studies/$slug'
-    | '/api/public/access-decision'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  AuthRoute: typeof AuthRoute
   CommunityStrategyRoute: typeof CommunityStrategyRoute
   HiringAlfredRoute: typeof HiringAlfredRoute
   MediaRoute: typeof MediaRoute
@@ -157,7 +132,6 @@ export interface RootRouteChildren {
   RecognitionRoute: typeof RecognitionRoute
   StoryRoute: typeof StoryRoute
   CaseStudiesSlugRoute: typeof CaseStudiesSlugRoute
-  ApiPublicAccessDecisionRoute: typeof ApiPublicAccessDecisionRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -204,13 +178,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CommunityStrategyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth': {
-      id: '/auth'
-      path: '/auth'
-      fullPath: '/auth'
-      preLoaderRoute: typeof AuthRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/': {
       id: '/'
       path: '/'
@@ -225,19 +192,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CaseStudiesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/public/access-decision': {
-      id: '/api/public/access-decision'
-      path: '/api/public/access-decision'
-      fullPath: '/api/public/access-decision'
-      preLoaderRoute: typeof ApiPublicAccessDecisionRouteImport
-      parentRoute: typeof rootRouteImport
-    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  AuthRoute: AuthRoute,
   CommunityStrategyRoute: CommunityStrategyRoute,
   HiringAlfredRoute: HiringAlfredRoute,
   MediaRoute: MediaRoute,
@@ -245,7 +204,6 @@ const rootRouteChildren: RootRouteChildren = {
   RecognitionRoute: RecognitionRoute,
   StoryRoute: StoryRoute,
   CaseStudiesSlugRoute: CaseStudiesSlugRoute,
-  ApiPublicAccessDecisionRoute: ApiPublicAccessDecisionRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
