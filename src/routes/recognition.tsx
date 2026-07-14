@@ -8,7 +8,7 @@ import wefConference from "@/assets/wef-conference.jpg";
 import wefWall from "@/assets/wef-wall.jpg";
 import unHq from "@/assets/un-hq.jpg";
 import cgtn from "@/assets/cgtn.jpg";
-import kigali from "@/assets/kigali.jpg";
+import kigali1 from "@/assets/kigali-1.jpg";
 
 export const Route = createFileRoute("/recognition")({
   head: () => ({
@@ -38,7 +38,7 @@ const AWARDS = [
 ];
 
 const SPEAKING = [
-  { kind: "Speaking", title: "Royal Leadership Institute · Kigali, Rwanda", img: kigali },
+  { kind: "Speaking", title: "Royal Leadership Institute · Kigali, Rwanda", img: kigali1 },
   { kind: "Television", title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"", img: cgtn, href: "https://www.youtube.com/watch?v=_33jgAvXAZ4&t=637s" },
 ];
 

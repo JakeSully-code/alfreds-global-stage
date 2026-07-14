@@ -83,7 +83,7 @@ function Home() {
             <Reveal>
               <div className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-[0.18em] text-muted-foreground">
                 <span className="w-1.5 h-1.5 rounded-full bg-[var(--emerald)] animate-pulse" />
-                Lagos · New York · Davos
+                Lagos · Beijing · Geneva · Colorado
               </div>
             </Reveal>
             <Reveal delay={0.05}>
@@ -130,7 +130,7 @@ function Home() {
                 animate={{ scale: 1 }}
                 transition={{ duration: 1.2, ease: "easeOut" }}
               />
-              <div className="relative mt-5 rounded-2xl border border-[var(--emerald)]/30 bg-background/80 backdrop-blur px-6 py-4 shadow-[0_20px_50px_-25px_rgba(16,20,24,0.3)]">
+              <div className="relative mt-5 rounded-2xl border border-[var(--emerald)] bg-[var(--emerald)]/5 backdrop-blur px-6 py-4 shadow-[0_20px_50px_-25px_rgba(16,20,24,0.3)]">
                 <p className="font-serif italic text-lg md:text-xl text-[var(--ink)] leading-snug text-center">
                   Community &amp; Ecosystem Builder | Global Program Leader | Product Strategist
                 </p>

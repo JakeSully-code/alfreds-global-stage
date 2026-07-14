@@ -10,6 +10,7 @@ import chinaUmbrellas from "@/assets/china-umbrellas.jpg";
 import greatwallFriends from "@/assets/greatwall-friends.jpg";
 import genevaStatue from "@/assets/geneva-statue.jpg";
 import qatarAirport from "@/assets/qatar-airport.jpg";
+import storyGreatwall from "@/assets/story-greatwall.jpg";
 
 export const Route = createFileRoute("/media")({
   head: () => ({
@@ -24,13 +25,10 @@ export const Route = createFileRoute("/media")({
 });
 
 const MEDIA = [
-  { kind: "Conference Talk", title: "Placeholder title" },
-  { kind: "Panel", title: "Placeholder title" },
-  { kind: "Podcast", title: "Placeholder title", img: podcast },
-  { kind: "Article", title: "Placeholder title" },
+  { kind: "Podcast", title: "Solana Pitch Clinic", img: podcast },
   {
     kind: "LinkedIn Essay",
-    title: "Placeholder title",
+    title: "Designing Hackathons for Global Collaboration",
     img: linkedinEssay,
     href: "https://www.linkedin.com/feed/update/urn:li:activity:7333280313344700419/",
   },
@@ -50,6 +48,7 @@ const PHOTOS = [
   { src: greatwallFriends, alt: "Alfred Collins with friends at the Great Wall of China" },
   { src: genevaStatue, alt: "Alfred Collins by a statue in Geneva" },
   { src: qatarAirport, alt: "Alfred Collins at the airport in Doha, Qatar" },
+  { src: storyGreatwall, alt: "Alfred Collins at the Great Wall of China" },
 ];
 
 function MediaPage() {
@@ -67,16 +66,6 @@ function MediaPage() {
 
         <div className="mt-16 grid sm:grid-cols-2 md:grid-cols-3 gap-4">
           {MEDIA.map((m, i) => {
-            if (!m.img) {
-              return (
-                <Reveal key={m.kind + i} delay={i * 0.04}>
-                  <div className="aspect-[4/3] rounded-xl bg-[var(--surface)] border border-border flex flex-col justify-end p-5 lift">
-                    <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
-                    <div className="font-serif text-lg mt-1">{m.title}</div>
-                  </div>
-                </Reveal>
-              );
-            }
             const content = (
               <>
                 <img
