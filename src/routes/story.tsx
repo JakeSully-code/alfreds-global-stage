@@ -8,7 +8,7 @@ export const Route = createFileRoute("/story")({
   head: () => ({
     meta: [
       { title: "My Story — Alfred Collins" },
-      { name: "description", content: "The full story: from a small home in Lagos to global stages — building systems that unlock opportunities for people." },
+      { name: "description", content: "The full story: from a small home in Lagos to global stages, building systems that unlock opportunities for people." },
       { property: "og:title", content: "My Story — Alfred Collins" },
       { property: "og:description", content: "Building systems that unlock opportunities for people." },
     ],
@@ -37,7 +37,7 @@ function StoryPage() {
             <Reveal delay={0.05}>
               <p>
                 If you only looked at my LinkedIn profile today, you might assume my
-                journey has always been international—global conferences, startup
+                journey has always been international: global conferences, startup
                 ventures, executive meetings, and collaborations across continents.
               </p>
             </Reveal>
@@ -68,7 +68,7 @@ function StoryPage() {
                 Born into a low-income family and raised by a single mother as the
                 first of four children, the odds were never particularly in my favour.
                 But looking back, I realize I was incredibly fortunate in one
-                important way—I grew up watching someone quietly transform lives every
+                important way: I grew up watching someone quietly transform lives every
                 single day.
               </p>
             </Reveal>
@@ -78,7 +78,7 @@ function StoryPage() {
                 children from neighbouring families to celebrate with us. Our home was
                 never the biggest, but somehow there was always room for one more
                 person at the table. She also filled our house with books. Textbooks,
-                novels, comics, biographies, storybooks—if there was something worth
+                novels, comics, biographies, storybooks. If there was something worth
                 reading, she found a way to bring it into our home. Long before I
                 understood what lifelong learning meant, I was already living in it.
               </p>
@@ -174,7 +174,7 @@ function StoryPage() {
             </Reveal>
             <Reveal delay={0.3}>
               <p>
-                What excites me most is working at moments of transformation—when
+                What excites me most is working at moments of transformation, when
                 organizations are evolving, industries are changing, or technology
                 creates entirely new possibilities. Those are the moments where
                 thoughtful strategy, strong execution, and genuine collaboration can
@@ -193,7 +193,7 @@ function StoryPage() {
             </Reveal>
             <Reveal delay={0.34}>
               <p>
-                Whether I'm designing the future of artist–fan engagement, shaping an
+                Whether I'm designing the future of artist-fan engagement, shaping an
                 AI learning platform, translating customer insights into product
                 decisions, or collaborating with teams across multiple countries, I'm
                 still pursuing the same mission that began in my mother's living room:
@@ -222,7 +222,7 @@ function StoryPage() {
 
             <Reveal delay={0.4}>
               <p>
-                And to me, that's the most meaningful measure of success—not the
+                And to me, that's the most meaningful measure of success: not the
                 titles we hold or the products we launch, but the number of lives that
                 are different because the systems we built made opportunity more
                 accessible than it was before.
