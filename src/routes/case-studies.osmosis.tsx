@@ -285,7 +285,7 @@ function OsmosisCaseStudy() {
             Throughout my work at Osmosis, several principles became foundational to how I approach
             community strategy and organizational design.
           </P>
-          <div className="mt-8 space-y-6">
+          <ul className="mt-8 space-y-6">
             <Principle lead="Communities are business systems.">
               Their greatest value lies not in conversation alone, but in their ability to generate
               measurable outcomes across product, customer success, recruitment, and growth.
@@ -306,7 +306,7 @@ function OsmosisCaseStudy() {
               The strongest communities continuously test, learn, and iterate rather than relying on
               static engagement models.
             </Principle>
-          </div>
+          </ul>
           <P className="mt-8">
             Ultimately, my experience at Osmosis reinforced a belief that continues to guide my work
             today:
@@ -411,9 +411,12 @@ function ImpactItem({ children }: { children: React.ReactNode }) {
 
 function Principle({ lead, children }: { lead: string; children: React.ReactNode }) {
   return (
-    <p className="text-lg text-foreground/85 leading-relaxed">
-      <span className="font-serif text-xl text-[var(--ink)]">{lead}</span>{" "}
-      <span>{children}</span>
-    </p>
+    <li className="flex items-start gap-3">
+      <span className="text-[var(--emerald)] text-lg leading-none translate-y-[3px]" aria-hidden="true">★</span>
+      <p className="text-lg text-foreground/85 leading-relaxed">
+        <span className="font-serif text-xl text-[var(--ink)]">{lead}</span>{" "}
+        <span>{children}</span>
+      </p>
+    </li>
   );
 }
