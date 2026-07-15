@@ -329,20 +329,22 @@ function OsmosisCaseStudy() {
 
 function Section({ index, title, children }: { index: string; title: string; children: React.ReactNode }) {
   return (
-    <Reveal>
-      <section className="mb-20">
+    <section className="mb-20">
+      <Reveal>
         <div className="font-mono text-xs uppercase tracking-widest text-[var(--emerald)]">{index}</div>
         <h2 className="mt-2 font-serif text-3xl md:text-4xl">{title}</h2>
-        <div className="mt-6 space-y-5">{children}</div>
-      </section>
-    </Reveal>
+      </Reveal>
+      <div className="mt-6 space-y-5">{children}</div>
+    </section>
   );
 }
 
 function SubSection({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="mt-12 pl-6 border-l-2 border-border">
-      <h3 className="font-serif text-2xl md:text-3xl">{title}</h3>
+      <Reveal>
+        <h3 className="font-serif text-2xl md:text-3xl">{title}</h3>
+      </Reveal>
       <div className="mt-4 space-y-5">{children}</div>
     </div>
   );
