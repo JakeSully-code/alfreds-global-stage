@@ -43,9 +43,10 @@ function StoryPage() {
             </Reveal>
             <Reveal delay={0.08}>
               <p>
-                The truth is, it started in a small home in Lagos, Nigeria, where my
-                mother taught me that opportunity isn't something you wait for. It's
-                something you create for others.
+                It started in a small but cozy home nestled in the rural side of
+                Lagos, where my mother ingrained into me the very foundations for
+                every other skillset, competencies, accolades, I would go on to
+                acquire in school and my career.
               </p>
             </Reveal>
           </div>

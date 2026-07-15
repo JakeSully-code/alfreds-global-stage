@@ -155,16 +155,13 @@ function Home() {
           <div className="lg:col-span-7 max-w-[62ch] space-y-6">
             <Reveal delay={0.05}>
               <p className="text-lg text-foreground/85 leading-[1.75]">
-                It started in a small home in Lagos, where my mother taught me that
-                opportunity isn't something you wait for — it's something you create
-                for others. That single idea has shaped every product I've shipped,
-                every community I've built, and every partnership I've forged since.
+                It started in a small but cozy home nestled in the rural side of Lagos,
+                where my mother ingrained into me the very foundations for every other
+                skillset, competencies, accolades, I would go on to acquire in school
+                and my career. Looking back, I realize I was incredibly fortunate in
+                one important way: I grew up watching someone quietly transform lives
+                every single day.
               </p>
-            </Reveal>
-            <Reveal delay={0.1}>
-              <blockquote className="border-l-2 border-[var(--emerald)] pl-6 font-serif text-2xl md:text-3xl leading-[1.15] tracking-tight text-[var(--ink)]">
-                How do we build systems that unlock opportunities for more people?
-              </blockquote>
             </Reveal>
             <Reveal delay={0.15}>
               <Link
