@@ -8,26 +8,6 @@ const CASE_STUDIES: Record<string, {
   metrics: { value: string; label: string }[];
   sections: { h: string; p: string }[];
 }> = {
-  roomz: {
-    name: "ROOMZ",
-    tagline: "Led Product Adoption & Market Penetration for a Creator Economy Platform.",
-    themes: ["0→1 Product", "Strategy", "Architecture", "Go-to-market"],
-    metrics: [
-      { value: "0→1", label: "Stage" },
-      { value: "MVP", label: "Shipping" },
-      { value: "2026", label: "Launch" },
-    ],
-    sections: [
-      { h: "Problem", p: "[Placeholder] The creator economy is overserved with tools and underserved with infrastructure." },
-      { h: "Research", p: "[Placeholder] Interviews, ethnography, and competitive teardowns to map the landscape." },
-      { h: "PRDs", p: "[Placeholder] Tight problem statements before any design or engineering investment." },
-      { h: "Roadmap", p: "[Placeholder] Sequenced bets, with kill criteria for each." },
-      { h: "Architecture", p: "[Placeholder] Composable systems chosen to optimize iteration speed." },
-      { h: "Product Strategy", p: "[Placeholder] Wedge → expansion → platform." },
-      { h: "Go-to-market", p: "[Placeholder] Community-led, creator-anchored, content-distributed." },
-      { h: "Lessons Learned", p: "[Placeholder] Notes from the build, updated as we ship." },
-    ],
-  },
   ascent: {
     name: "Ascent Innovation Lab",
     tagline: "Developed an education platform to empower GenZs across the Global South with AI & VR skills.",
