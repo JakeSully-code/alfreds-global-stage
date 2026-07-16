@@ -96,8 +96,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "Alfred Collins — Product, Community & Systems Leader" },
       { name: "twitter:description", content: "Product strategist, systems thinker, entrepreneur, and global community leader. Building products, communities, and systems that scale human potential." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/be5f4656-a860-4e7f-a3b4-45e770dc95fd/id-preview-4d7f7fe8--6f69b77c-3521-4cea-bc69-0aa38ed0fe82.lovable.app-1783734074820.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/be5f4656-a860-4e7f-a3b4-45e770dc95fd/id-preview-4d7f7fe8--6f69b77c-3521-4cea-bc69-0aa38ed0fe82.lovable.app-1783734074820.png" },
+      { property: "og:image", content: "https://alfreds-global-portfolio.lovable.app/og-image.png" },
+      { name: "twitter:image", content: "https://alfreds-global-portfolio.lovable.app/og-image.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
