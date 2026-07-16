@@ -25,23 +25,25 @@ export const Route = createFileRoute("/media")({
 });
 
 const MEDIA = [
-  { kind: "Podcast", title: "Solana Pitch Clinic", img: podcast },
+  { kind: "Podcast", title: "Solana Pitch Clinic", img: podcast, imgPosition: "object-top" },
   {
     kind: "LinkedIn Essay",
     title: "Designing Hackathons for Global Collaboration",
     img: linkedinEssay,
+    imgPosition: "object-center",
     href: "https://www.linkedin.com/feed/update/urn:li:activity:7333280313344700419/",
   },
   {
     kind: "Broadcast",
     title: "CGTN — \"Frontier Tech & Growth for Emerging Economies\"",
     img: cgtn,
+    imgPosition: "object-center",
     href: "https://www.youtube.com/watch?v=_33jgAvXAZ4&t=637s",
   },
 ];
 
 const PHOTOS = [
-  { src: favSuit, alt: "Alfred Collins in a suit" },
+  { src: favSuit, alt: "Alfred Collins in a suit", imgPosition: "object-top" },
   { src: favSunset, alt: "Alfred Collins at sunset" },
   { src: favTerrace, alt: "Alfred Collins on a terrace" },
   { src: chinaUmbrellas, alt: "Alfred Collins in China with umbrellas" },
@@ -72,7 +74,7 @@ function MediaPage() {
                   src={m.img}
                   alt={m.title}
                   loading="lazy"
-                  className="aspect-video w-full object-cover object-top"
+                  className={`aspect-video w-full object-cover ${m.imgPosition}`}
                 />
                 <div className="p-5">
                   <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{m.kind}</div>
@@ -104,7 +106,7 @@ function MediaPage() {
                   src={p.src}
                   alt={p.alt}
                   loading="lazy"
-                  className="aspect-square rounded-xl border border-border object-cover w-full"
+                  className={`aspect-square rounded-xl border border-border object-cover w-full ${p.imgPosition ?? ""}`}
                 />
               </Reveal>
             ))}
