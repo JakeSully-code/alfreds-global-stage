@@ -14,7 +14,6 @@ import { Route as RecognitionRouteImport } from './routes/recognition'
 import { Route as ProductThinkingRouteImport } from './routes/product-thinking'
 import { Route as MediaRouteImport } from './routes/media'
 import { Route as HiringAlfredRouteImport } from './routes/hiring-alfred'
-import { Route as DebugEnvRouteImport } from './routes/debug-env'
 import { Route as CommunityStrategyRouteImport } from './routes/community-strategy'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CaseStudiesRoomzRouteImport } from './routes/case-studies.roomz'
@@ -46,11 +45,6 @@ const HiringAlfredRoute = HiringAlfredRouteImport.update({
   path: '/hiring-alfred',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DebugEnvRoute = DebugEnvRouteImport.update({
-  id: '/debug-env',
-  path: '/debug-env',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const CommunityStrategyRoute = CommunityStrategyRouteImport.update({
   id: '/community-strategy',
   path: '/community-strategy',
@@ -80,7 +74,6 @@ const CaseStudiesSlugRoute = CaseStudiesSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/community-strategy': typeof CommunityStrategyRoute
-  '/debug-env': typeof DebugEnvRoute
   '/hiring-alfred': typeof HiringAlfredRoute
   '/media': typeof MediaRoute
   '/product-thinking': typeof ProductThinkingRoute
@@ -93,7 +86,6 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/community-strategy': typeof CommunityStrategyRoute
-  '/debug-env': typeof DebugEnvRoute
   '/hiring-alfred': typeof HiringAlfredRoute
   '/media': typeof MediaRoute
   '/product-thinking': typeof ProductThinkingRoute
@@ -107,7 +99,6 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/community-strategy': typeof CommunityStrategyRoute
-  '/debug-env': typeof DebugEnvRoute
   '/hiring-alfred': typeof HiringAlfredRoute
   '/media': typeof MediaRoute
   '/product-thinking': typeof ProductThinkingRoute
@@ -122,7 +113,6 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/community-strategy'
-    | '/debug-env'
     | '/hiring-alfred'
     | '/media'
     | '/product-thinking'
@@ -135,7 +125,6 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/community-strategy'
-    | '/debug-env'
     | '/hiring-alfred'
     | '/media'
     | '/product-thinking'
@@ -148,7 +137,6 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/community-strategy'
-    | '/debug-env'
     | '/hiring-alfred'
     | '/media'
     | '/product-thinking'
@@ -162,7 +150,6 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   CommunityStrategyRoute: typeof CommunityStrategyRoute
-  DebugEnvRoute: typeof DebugEnvRoute
   HiringAlfredRoute: typeof HiringAlfredRoute
   MediaRoute: typeof MediaRoute
   ProductThinkingRoute: typeof ProductThinkingRoute
@@ -210,13 +197,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HiringAlfredRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/debug-env': {
-      id: '/debug-env'
-      path: '/debug-env'
-      fullPath: '/debug-env'
-      preLoaderRoute: typeof DebugEnvRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/community-strategy': {
       id: '/community-strategy'
       path: '/community-strategy'
@@ -258,7 +238,6 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   CommunityStrategyRoute: CommunityStrategyRoute,
-  DebugEnvRoute: DebugEnvRoute,
   HiringAlfredRoute: HiringAlfredRoute,
   MediaRoute: MediaRoute,
   ProductThinkingRoute: ProductThinkingRoute,
