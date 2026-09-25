@@ -26,7 +26,14 @@ export function WorldMap() {
   const H = 600;
 
   // Dotted grid representing landmasses approximately — purely decorative.
+  // Uses a deterministic hash of (x, y) instead of Math.random() so the SSR
+  // markup matches the client and React doesn't throw a hydration mismatch.
   const dots = useMemo(() => {
+    // Deterministic pseudo-random in [0, 1) from two ints (GLSL-style hash).
+    const hash = (x: number, y: number) => {
+      const s = Math.sin(x * 127.1 + y * 311.7) * 43758.5453;
+      return s - Math.floor(s);
+    };
     const arr: { x: number; y: number }[] = [];
     const step = 14;
     for (let y = 40; y < H - 40; y += step) {
@@ -35,7 +42,7 @@ export function WorldMap() {
         const n =
           Math.sin(x * 0.013) * Math.cos(y * 0.017) +
           Math.sin((x + y) * 0.008) * 0.6;
-        if (n > 0.15 && Math.random() > 0.25) arr.push({ x, y });
+        if (n > 0.15 && hash(x, y) > 0.25) arr.push({ x, y });
       }
     }
     return arr;
