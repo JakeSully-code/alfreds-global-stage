@@ -41,12 +41,19 @@
 
 :root {
   --radius: 0.5rem;
+  color-scheme: light;
 
   /* Brand */
-  --ink: #101418;            /* deep charcoal */
-  --surface: #f5f7f8;        /* soft gray */
-  --emerald: #16a34a;        /* accent */
+  --ink: #101418;            /* primary text ink — flips to light in dark mode */
+  --surface: #f5f7f8;        /* soft gray section background */
+  --emerald: #16a34a;        /* accent (constant in both themes) */
   --emerald-foreground: #ffffff;
+
+  /* Intentional dark panels (e.g. newsletter card, case-study heroes).
+     Constant-dark in light mode; elevated dark in dark mode. Distinct from
+     --ink, which is overloaded no more — --ink is text, --panel is surface. */
+  --panel: #101418;
+  --panel-foreground: #ffffff;
 
   --background: #ffffff;
   --foreground: #1a1a1a;
@@ -70,6 +77,14 @@
 }
 
 .dark {
+  color-scheme: dark;
+
+  /* Brand tokens that must flip for dark mode */
+  --ink: #f5f7f8;            /* text ink → light on dark backgrounds */
+  --surface: #161b21;        /* section background → dark */
+  --panel: #1c222a;          /* dark panels → slightly elevated so they stay
+                                visually distinct from the page background */
+
   --background: #101418;
   --foreground: #f5f7f8;
   --card: #161b21;
@@ -105,6 +120,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11";
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
   h1, h2, h3, h4, h5 {

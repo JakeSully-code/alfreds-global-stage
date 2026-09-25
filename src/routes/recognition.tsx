@@ -132,7 +132,7 @@ export default function RecognitionPage() {
                   </div>
                 </>
               );
-              const className = "rounded-xl bg-[var(--ink)] text-white overflow-hidden block";
+              const className = "rounded-xl bg-[var(--panel)] text-white overflow-hidden block";
               return s.href ? (
                 <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className={`${className} lift`}>
                   {content}

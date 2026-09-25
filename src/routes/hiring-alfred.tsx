@@ -199,7 +199,7 @@ function Brief({ brief }: { brief: RecruiterBrief }) {
       </Block>
 
       <Block title="Interview availability">
-        <div className="rounded-2xl bg-[var(--ink)] text-white p-7 flex items-center justify-center">
+        <div className="rounded-2xl bg-[var(--panel)] text-white p-7 flex items-center justify-center">
           <a href={brief.availability.bookingUrl} target="_blank" rel="noopener noreferrer" className="rounded-full bg-[var(--emerald)] text-white px-6 py-3 text-sm font-medium hover:opacity-90">Book A Slot on my Calendar</a>
         </div>
       </Block>

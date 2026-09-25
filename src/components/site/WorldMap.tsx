@@ -71,7 +71,7 @@ export function WorldMap() {
       </defs>
 
       {dots.map((d, i) => (
-        <circle key={i} cx={d.x} cy={d.y} r="1.1" fill="#101418" opacity="0.18" />
+        <circle key={i} cx={d.x} cy={d.y} r="1.1" fill="var(--ink)" opacity="0.18" />
       ))}
 
       {arcs.map((a, i) => (

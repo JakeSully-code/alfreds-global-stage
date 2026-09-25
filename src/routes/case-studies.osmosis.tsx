@@ -53,7 +53,7 @@ function OsmosisCaseStudy() {
         </Reveal>
       </header>
 
-      <section className="bg-[var(--ink)] text-white">
+      <section className="bg-[var(--panel)] text-white">
         <div className="container-x py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           {METRICS.map((m) => (
             <div key={m.label}>

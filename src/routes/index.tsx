@@ -284,7 +284,7 @@ function Home() {
           </div>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="rounded-2xl bg-[var(--ink)] text-white p-7"
+            className="rounded-2xl bg-[var(--panel)] text-white p-7"
           >
             <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">Newsletter</div>
             <div className="font-serif text-2xl mt-1">Notes on products, communities &amp; systems.</div>

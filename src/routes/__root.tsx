@@ -26,7 +26,7 @@ function NotFoundComponent() {
         <div className="mt-6">
           <Link
             to="/"
-            className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--emerald)]"
+            className="inline-flex items-center justify-center rounded-full bg-[var(--panel)] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[var(--emerald)]"
           >
             Go home
           </Link>
@@ -58,7 +58,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
               router.invalidate();
               reset();
             }}
-            className="inline-flex items-center justify-center rounded-full bg-[var(--ink)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--emerald)] transition-colors"
+            className="inline-flex items-center justify-center rounded-full bg-[var(--panel)] px-5 py-2.5 text-sm font-medium text-white hover:bg-[var(--emerald)] transition-colors"
           >
             Try again
           </button>
@@ -117,8 +117,17 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
+        {/* Set the theme class before first paint to avoid a flash of the
+            wrong theme. Saved choice wins; otherwise fall back to the OS
+            preference. Mirrors the logic in ThemeToggle. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){try{var s=localStorage.getItem('theme');var d=s?s==='dark':window.matchMedia('(prefers-color-scheme: dark)').matches;var e=document.documentElement;e.classList.toggle('dark',d);e.style.colorScheme=d?'dark':'light';}catch(e){}})();",
+          }}
+        />
         <HeadContent />
       </head>
       <body>

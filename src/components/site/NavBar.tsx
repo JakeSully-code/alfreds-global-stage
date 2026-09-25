@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { ThemeToggle } from "./ThemeToggle";
 
 const links: { to: string; label: string }[] = [
   { to: "/story", label: "Story" },
@@ -33,35 +34,41 @@ export function NavBar() {
           Alfred Collins<span className="text-[var(--emerald)]">.</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
-          {links.map((l) =>
-            l.to.startsWith("/#") ? (
-              <a key={l.to} href={l.to} className="hover:text-[var(--ink)] transition-colors">
-                {l.label}
-              </a>
-            ) : (
-              <Link key={l.to} to={l.to} className="hover:text-[var(--ink)] transition-colors">
-                {l.label}
-              </Link>
-            )
-          )}
-        </nav>
+        <div className="flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
+            {links.map((l) =>
+              l.to.startsWith("/#") ? (
+                <a key={l.to} href={l.to} className="hover:text-[var(--ink)] transition-colors">
+                  {l.label}
+                </a>
+              ) : (
+                <Link key={l.to} to={l.to} className="hover:text-[var(--ink)] transition-colors">
+                  {l.label}
+                </Link>
+              )
+            )}
+          </nav>
 
-        <Link
-          to="/hiring-alfred"
-          className="hidden md:inline-flex items-center rounded-full bg-[var(--emerald)] px-4 py-2 text-sm text-white hover:opacity-90 transition-opacity"
-        >
-          For Recruiters →
-        </Link>
+          <div className="flex items-center gap-3">
+            <ThemeToggle />
 
-        <button
-          aria-label="Toggle menu"
-          className="md:hidden p-2"
-          onClick={() => setOpen((v) => !v)}
-        >
-          <div className="w-5 h-px bg-[var(--ink)] mb-1.5" />
-          <div className="w-5 h-px bg-[var(--ink)]" />
-        </button>
+            <Link
+              to="/hiring-alfred"
+              className="hidden md:inline-flex items-center rounded-full bg-[var(--emerald)] px-4 py-2 text-sm text-white hover:opacity-90 transition-opacity"
+            >
+              For Recruiters →
+            </Link>
+
+            <button
+              aria-label="Toggle menu"
+              className="md:hidden p-2"
+              onClick={() => setOpen((v) => !v)}
+            >
+              <div className="w-5 h-px bg-[var(--ink)] mb-1.5" />
+              <div className="w-5 h-px bg-[var(--ink)]" />
+            </button>
+          </div>
+        </div>
       </div>
 
       {open && (
