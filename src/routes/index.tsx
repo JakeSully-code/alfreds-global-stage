@@ -284,16 +284,16 @@ function Home() {
           </div>
           <form
             onSubmit={(e) => e.preventDefault()}
-            className="rounded-2xl bg-[var(--panel)] text-white p-7"
+            className="rounded-2xl bg-[var(--panel)] text-[var(--panel-foreground)] border border-border p-7"
           >
-            <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">Newsletter</div>
+            <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">Newsletter</div>
             <div className="font-serif text-2xl mt-1">Notes on products, communities &amp; systems.</div>
-            <p className="text-sm text-white/70 mt-2">One thoughtful email, occasionally.</p>
+            <p className="text-sm text-muted-foreground mt-2">One thoughtful email, occasionally.</p>
             <div className="mt-6 flex gap-2">
               <input
                 type="email"
                 placeholder="you@domain.com"
-                className="flex-1 rounded-full bg-white/10 border border-white/15 px-4 py-3 text-sm placeholder:text-white/40 focus:outline-none focus:border-[var(--emerald)]"
+                className="flex-1 rounded-full bg-background border border-border text-foreground px-4 py-3 text-sm placeholder:text-muted-foreground focus:outline-none focus:border-[var(--emerald)]"
               />
               <button className="rounded-full bg-[var(--emerald)] text-white px-5 py-3 text-sm font-medium hover:opacity-90">
                 Subscribe

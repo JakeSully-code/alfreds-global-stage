@@ -127,12 +127,12 @@ export default function RecognitionPage() {
                     />
                   )}
                   <div className="p-6">
-                    <div className="font-mono text-[10px] uppercase tracking-widest text-white/60">{s.kind}</div>
+                    <div className="font-mono text-[10px] uppercase tracking-widest text-muted-foreground">{s.kind}</div>
                     <div className="mt-2 font-serif text-xl">{s.title}</div>
                   </div>
                 </>
               );
-              const className = "rounded-xl bg-[var(--panel)] text-white overflow-hidden block";
+              const className = "rounded-xl bg-[var(--panel)] text-[var(--panel-foreground)] border border-border overflow-hidden block";
               return s.href ? (
                 <a key={s.title} href={s.href} target="_blank" rel="noopener noreferrer" className={`${className} lift`}>
                   {content}

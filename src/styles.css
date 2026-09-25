@@ -49,11 +49,11 @@
   --emerald: #16a34a;        /* accent (constant in both themes) */
   --emerald-foreground: #ffffff;
 
-  /* Intentional dark panels (e.g. newsletter card, case-study heroes).
-     Constant-dark in light mode; elevated dark in dark mode. Distinct from
-     --ink, which is overloaded no more — --ink is text, --panel is surface. */
-  --panel: #101418;
-  --panel-foreground: #ffffff;
+  /* Feature panels (newsletter card, case-study metric strips, recognition
+     cards, hiring CTA). Light, on-brand card surface in light mode; elevated
+     dark surface in dark mode (see .dark). Separate from --ink (text). */
+  --panel: #ffffff;
+  --panel-foreground: #101418;
 
   --background: #ffffff;
   --foreground: #1a1a1a;
@@ -82,8 +82,8 @@
   /* Brand tokens that must flip for dark mode */
   --ink: #f5f7f8;            /* text ink → light on dark backgrounds */
   --surface: #161b21;        /* section background → dark */
-  --panel: #1c222a;          /* dark panels → slightly elevated so they stay
-                                visually distinct from the page background */
+  --panel: #1c222a;          /* feature panels → elevated dark, distinct from bg */
+  --panel-foreground: #f5f7f8;
 
   --background: #101418;
   --foreground: #f5f7f8;

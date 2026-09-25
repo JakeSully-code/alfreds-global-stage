@@ -53,12 +53,12 @@ function OsmosisCaseStudy() {
         </Reveal>
       </header>
 
-      <section className="bg-[var(--panel)] text-white">
+      <section className="bg-[var(--panel)] text-[var(--panel-foreground)] border-y border-border">
         <div className="container-x py-12 grid grid-cols-2 md:grid-cols-4 gap-8">
           {METRICS.map((m) => (
             <div key={m.label}>
               <div className="font-mono text-3xl md:text-4xl text-[var(--emerald)]">{m.value}</div>
-              <div className="text-sm text-white/60 mt-2">{m.label}</div>
+              <div className="text-sm text-muted-foreground mt-2">{m.label}</div>
             </div>
           ))}
         </div>
